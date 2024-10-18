@@ -1,0 +1,239 @@
+/* overall settings */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    overflow: scroll;
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+}
+
+h1 {
+    font-family: "Roboto";
+    font-size: 4rem;
+    color:#03247e;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-family: "Roboto";
+    font-size: 2.5rem;
+    font-weight: 500;
+    padding-top: 4rem;
+    margin-bottom: 4rem;
+    position: relative;
+    text-align: center;
+}
+
+h3 {
+    font-family: "Roboto";
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+}
+
+h4 {
+    font-family: "Roboto Mono";
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+    color: white;
+}
+
+button {
+    background-color: #63139d;
+    font-family: "Roboto Mono";
+    font-size: 1rem;
+    padding: 6px 10px;
+    border-radius: 0.25rem;
+}
+
+button:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #4d0f7d; /* Darker purple on hover */
+}
+
+/* header settings */
+
+header {
+    background-color: #001242;
+    color: #e2dfdf;
+    width: 100%;
+    height: 6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /*align-content: center;*/
+    text-transform: uppercase;
+    box-shadow: 0 1px 1px #3f3c36;
+    z-index: 100;
+}
+
+header h3 { /* The "logo" element */
+    padding-left: 1.5rem;
+    margin-bottom: 0;
+}
+
+header nav ul {
+    display: flex;
+    list-style: none;
+    padding-right: 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    align-items: center;
+}
+
+nav ul li {
+    padding-left: 2.5rem;
+}
+
+header button {
+    margin-left: 2.5rem;
+}
+
+/* banner or hero section */
+
+main {
+    position: relative;
+    top: 6rem; 
+}
+
+.banner {
+    height: 60rem;
+    display: flex;
+    text-align: center;
+    background-image: url('resources/brickwall.png');
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: cover;
+    justify-content: center;
+}
+
+.hero-section {
+    margin-top: 20rem;
+}
+
+
+.banner h3 {
+    margin-top: 10rem;
+}
+
+
+/* form section */
+
+form {
+    gap: 15px;
+    width: 500px;
+    display: inline-block;
+    /* Form outline */
+    padding: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 1rem;
+    /*background-color: #ffb765;*/
+    background-color: #d3d3d3;
+    color: black;
+}
+
+form p + p {
+    margin-top: 1rem;
+}
+
+form h4 {
+    text-align: left;
+    font-size: 1.25rem;
+    font-family: "Montserrat";
+}
+
+form p {
+    max-width: 100%;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center; /* Center align labels and inputs */
+}
+
+label {
+    /* Uniform size & alignment */
+    display: inline-block;
+    min-width: 120px;
+    text-align: right;
+    margin-right: 10px;
+    font-size: .9rem;
+}
+
+input,
+textarea {
+  /* To make sure that all text fields have the same font settings*/
+    font: .8rem "Roboto Mono";
+    width: 100%;
+    max-width: 400px; /* Responsive width control */
+    padding: 6px;
+    border: 1px solid #999;
+    border-radius: 4px; 
+}
+
+.form-section textarea {
+    height: 6rem;
+}
+
+input:focus,
+textarea:focus {
+  /* Additional highlight for focused elements */
+  border-color: #000;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Add shadow on focus */
+  transition: border-color 0.2s ease; /* Smooth transition on focus */
+}
+
+textarea {
+    /* Align multiline text fields with their labels */
+    vertical-align: top;
+  }
+
+#submit-button {
+    padding: 4px 8px;
+    background-color: #cd7739;
+    border-radius: 0.25rem;
+    font-size: .9rem;
+    font-family: "Roboto Mono";
+    cursor: pointer;
+    margin-left: 130px;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+    width: 40%;
+}
+
+#submit-button:hover {
+    background-color: #8f5135; /* Darker purple on hover */
+}
+
+/* footer */
+footer {
+    background-color: #001242; 
+    color: white; 
+    text-align: center;  
+    padding: 1rem; 
+    position: relative; 
+    width: 100%;  
+    bottom: 0;  
+}
+
+footer p {
+    margin-bottom: 0.5rem;
+    font-size: .8rem;
+    max-width: 100%;
+    font-family: "Roboto Mono";
+}

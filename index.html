@@ -27,13 +27,15 @@
         <main>
             <!-- Banner section -->
             <div class="banner">
-                <div class="hero-section">
+                <div id="hero-section">
                     <h1>Test a Credit Card</h1>
-                    <h3>See if a card is fake or not</h3>
+                    <h3 id="try-card">Try if a card is fake or not</h3> <!-- this line is changed in js -->
+                    <div id="generate-a-new"></div> <!-- script to generate a new card -->
                     <form>
+                        <h4>Step 2: Validate the card number here.</h4>
                         <p>
                             <label for="card-number">Card Number: </label>
-                            <input type="number" id="card-number" name="card-number" placeholder="Enter the credit card digits" required>
+                            <input type="text" id="card-number" name="card-number" placeholder="Enter the credit card digits" required>
                         </p>
                         <p>
                             <input type="submit" value="Test card" id="submit-button">

@@ -179,6 +179,72 @@ const idInvalidCardCompanies = invalidArr => {
     return invalidCardCompanies;
 }
 
+// function to just do get the card company for a single card:
+
+const getCardCompany = card => {
+    if ((card[0] === 3 && card[1] === 4) || (card[0] === 3 && card[1] === 7)) { // Amex begins with 34 or 37
+        return'Amex (American Express)';
+    } else if (card[0] === 3 && card[1] === 5 ){  // JCB range is actually 3528–3589
+        return 'JCB';
+    } else if ((card[0] === 3 && card[1] === 0 && card[2] === 0) || // Diners Club – Carte Blanche begins with 300, 301, 302, 303, 304, 305
+               (card[0] === 3 && card[1] === 0 && card[2] === 1) || 
+               (card[0] === 3 && card[1] === 0 && card[2] === 2) || 
+               (card[0] === 3 && card[1] === 0 && card[2] === 3) || 
+               (card[0] === 3 && card[1] === 0 && card[2] === 4) || 
+               (card[0] === 3 && card[1] === 0 && card[2] === 5)) { 
+        return 'Diners Club – Carte Blanche';
+    } else if (card[0] === 3 && card[1] === 6) { // Diners Club – International begins with 36
+        return 'Diners Club – International';
+    } else if (card[0] === 5 && card[1] === 4) { // Diners Club – USA & Canada begins with 54
+        return 'Diners Club – USA & Canada';
+    } else if ((card[0] === 4 && card[1] === 0 && card[2] === 3 && card[3] === 6) || // Visa Electron begins with 4026, 417500, 4508, 4844, 4913, 4917
+               (card[0] === 4 && card[1] === 1 && card[2] === 7 && card[4] === 5 && card[5] === 0 && card[6] === 0) || 
+               (card[0] === 4 && card[1] === 5 && card[2] === 0 && card[3] === 8) || 
+               (card[0] === 4 && card[1] === 8 && card[2] === 4 && card[3] === 4) || 
+               (card[0] === 4 && card[1] === 9 && card[2] === 1 && card[3] === 3) || 
+               (card[0] === 4 && card[1] === 9 && card[2] === 1 && card[3] === 7)){ 
+        return 'Visa Electron';
+    } else if (card[0] === 4) { // Visa begins with 4
+        return 'Visa';
+    } else if ((card[0] === 5 && card[1] === 1) || // Mastercard begins with 51, 52, 53, 54, 55, 222100-272099
+               (card[0] === 5 && card[1] === 2) ||
+               (card[0] === 5 && card[1] === 3) ||
+               (card[0] === 5 && card[1] === 4) ||
+               (card[0] === 5 && card[1] === 5) ||
+               (card[0] === 2 && card[1] === 2) || // actually it's a range from 222100-272099
+               (card[0] === 2 && card[1] === 3) ||
+               (card[0] === 2 && card[1] === 4) ||
+               (card[0] === 2 && card[1] === 5) ||
+               (card[0] === 2 && card[1] === 6) ||
+               (card[0] === 2 && card[1] === 7)){
+        return 'Mastercard';
+    } else if ((card[0] === 5 && card[1] === 0 && card[2] === 1 && card[3] === 8) || // Maestro begins with 5018, 5020, 5038, 5893, 6304, 6759, 6761, 6762, 6763
+               (card[0] === 5 && card[1] === 0 && card[2] === 2 && card[3] === 0) || 
+               (card[0] === 5 && card[1] === 0 && card[2] === 3 && card[3] === 8) || 
+               (card[0] === 5 && card[1] === 8 && card[2] === 9 && card[3] === 3) || 
+               (card[0] === 6 && card[1] === 3 && card[2] === 0 && card[3] === 4) || 
+               (card[0] === 6 && card[1] === 7 && card[2] === 5 && card[3] === 9) || 
+               (card[0] === 6 && card[1] === 7 && card[2] === 6 && card[3] === 1) || 
+               (card[0] === 6 && card[1] === 7 && card[2] === 6 && card[3] === 2) || 
+               (card[0] === 6 && card[1] === 7 && card[2] === 6 && card[3] === 3)){
+        return 'Maestro';
+    } else if ((card[0] === 6 && card[1] === 0 && card[2] === 1 && card[3] === 1) || // Discover begins with 6011, 622126-622925, 644, 645, 647, 648, 649, 65
+               (card[0] === 6 && card[1] === 4 && card[2] === 4) || // actually it's a range: 622126-622925
+               (card[0] === 6 && card[1] === 4 && card[2] === 5) ||
+               (card[0] === 6 && card[1] === 4 && card[2] === 7) ||
+               (card[0] === 6 && card[1] === 4 && card[2] === 8) ||
+               (card[0] === 6 && card[1] === 4 && card[2] === 9) ||
+               (card[0] === 6 && card[1] === 5)){
+        return 'Discover';
+    }  else if ((card[0] === 6 && card[1] === 3 && card[2] === 7) || // InstaPayment begins with 637, 638, 639
+                (card[0] === 6 && card[1] === 3 && card[2] === 8) || 
+                (card[0] === 6 && card[1] === 3 && card[2] === 9)){
+        return 'InstaPayment';
+    } else {
+            return 'Unknown company';
+    }
+    }
+
 // function to create an array from a string of number:
 
 const arrayFromString = string => {
@@ -189,15 +255,6 @@ const arrayFromString = string => {
     });
     return numberArr;
 }
-
-/* Testing turning a string of a long number into an array of numbers: 
-let testString1 = '4556913208160220';
-let testStringArray = arrayFromString(testString1);
-
-console.log(testStringArray);
-console.log(validateCred(testStringArray));
-console.log(turnInvalidCardValid(testStringArray));
-*/
 
 // function to turn invalid cards to valid. By adding a number, which makes the sumCheck % 10 = 0. 
 
@@ -233,52 +290,6 @@ const turnInvalidCardValid = cardArr => {
         return cardArr;
     }
 }
-
-/* testing turning invalid cards to valid: 
-let invalid1ToValid = turnInvalidCardValid(invalid1);
-let invalid2ToValid = turnInvalidCardValid(invalid2);
-let invalid3ToValid = turnInvalidCardValid(invalid3);
-let invalid4ToValid = turnInvalidCardValid(invalid4);
-let invalid5ToValid = turnInvalidCardValid(invalid5);
-
-console.log(invalid1ToValid);
-console.log(invalid2ToValid);
-console.log(invalid3ToValid);
-console.log(invalid4ToValid);
-console.log(invalid5ToValid);
-
-console.log(validateCred(invalid1ToValid));
-console.log(validateCred(invalid2ToValid));
-console.log(validateCred(invalid3ToValid));
-console.log(validateCred(invalid4ToValid));
-console.log(validateCred(invalid5ToValid));
-*/ 
-
-/* testing turning mystery cards to valid, without mutating correct cards:
-console.log(validateCred(mystery1));
-console.log(validateCred(mystery2));
-console.log(validateCred(mystery3));
-console.log(validateCred(mystery4));
-console.log(validateCred(mystery5));
-
-let mystery1ToValid = turnInvalidCardValid(mystery1);
-let mystery2ToValid = turnInvalidCardValid(mystery2);
-let mystery3ToValid = turnInvalidCardValid(mystery3);
-let mystery4ToValid = turnInvalidCardValid(mystery4);
-let mystery5ToValid = turnInvalidCardValid(mystery5);
-
-console.log(mystery1ToValid);
-console.log(mystery2ToValid);
-console.log(mystery3ToValid);
-console.log(mystery4ToValid);
-console.log(mystery5ToValid);
-
-console.log(validateCred(mystery1ToValid));
-console.log(validateCred(mystery2ToValid));
-console.log(validateCred(mystery3ToValid));
-console.log(validateCred(mystery4ToValid));
-console.log(validateCred(mystery5ToValid));
-*/
 
 // testing cards from this site: https://www.freeformatter.com/credit-card-number-generator-validator.html
 
@@ -338,18 +349,38 @@ const newBatch = [
     masterC1, masterC2
 ]
 
-// tests
-/*
-let fakeNewCards = findInvalidCards(newBatch);
-console.log(fakeNewCards);
+// website interactivity:
 
-let newFakeCardCompanies = idInvalidCardCompanies(fakeNewCards);
-console.log(newFakeCardCompanies);
-*/
+document.getElementById('try-card').innerHTML = 'Step 1. Generate a new card number to try.';
+let tryCardElement = document.getElementById('try-card');
+tryCardElement.style.color = 'red';
 
+// generate a card number button interactivity:
 
+let generateCardBox = document.createElement('button');
+generateCardBox.id = 'cardBox';
+generateCardBox.innerHTML = 'Generate it!';
+document.getElementById('generate-a-new').appendChild(generateCardBox);
+generateCardBox.style.marginBottom = '2rem';
+generateCardBox.style.backgroundColor = 'red';
 
+function generateNewCard() {
+    let newNo = document.createElement('p');
+    let randomCard = newBatch[Math.floor(Math.random() * newBatch.length)];
+    let cardCo = getCardCompany(randomCard);
+    let cardMessage = randomCard.join('') + " (" + cardCo + ")";
+    newNo.innerHTML = cardMessage;
+    document.getElementById('generate-a-new').appendChild(newNo);
+    generateCardBox.removeEventListener('click', generateNewCard); // this makes sure button is clickable only once
+    generateCardBox.style.backgroundColor = 'gray';
 
+}
+
+generateCardBox.addEventListener('click', generateNewCard);
+
+let reset = function() {
+
+}
 
 /* order of creating a website flow: 
 

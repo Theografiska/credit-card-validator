@@ -114,17 +114,13 @@ main {
 }
 
 .banner {
-    height: 60rem;
     display: flex;
     text-align: center;
-    background-image: url('resources/brickwall.png');
-    background-repeat: no-repeat;
-    background-position: left;
-    background-size: cover;
     justify-content: center;
+    margin-bottom: 4rem;
 }
 
-.hero-section {
+#hero-section {
     margin-top: 20rem;
 }
 
@@ -218,6 +214,7 @@ textarea {
 
 #submit-button:hover {
     background-color: #8f5135; /* Darker purple on hover */
+    color: white;
 }
 
 /* footer */
@@ -227,8 +224,9 @@ footer {
     text-align: center;  
     padding: 1rem; 
     position: relative; 
+    top: 6rem;
     width: 100%;  
-    bottom: 0;  
+    margin-top: 4rem;
 }
 
 footer p {

@@ -300,7 +300,7 @@ function generateNewCard() {
                 deletePreviousInvalidToValid(); 
                 correctCard = turnInvalidCardValid(randomCard);
                 let fixedCard = document.createElement('p');
-                let newMessage = "Your new card number is: <br><br>" + correctCard.join('') + " | " + cardCo;
+                let newMessage = "The corrected card number is: <br><br>" + correctCard.join('') + " | " + cardCo;
                 fixedCard.innerHTML = newMessage;
                 fixedCard.id = 'fixed-card';
                 fixedCard.style.marginTop = '2rem';

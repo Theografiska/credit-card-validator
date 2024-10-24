@@ -61,6 +61,7 @@ button {
     font-size: 1rem;
     padding: 6px 10px;
     border-radius: 0.25rem;
+    cursor: pointer;
 }
 
 button:hover {
@@ -117,16 +118,17 @@ main {
     display: flex;
     text-align: center;
     justify-content: center;
-    margin-bottom: 4rem;
+    margin-bottom: 16rem;
 }
 
 #hero-section {
-    margin-top: 20rem;
+    margin-top: 10rem;
+    margin-bottom: 16rem;
 }
 
 
 .banner h3 {
-    margin-top: 10rem;
+    margin-top: 4rem;
 }
 
 

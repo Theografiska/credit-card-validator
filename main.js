@@ -247,8 +247,15 @@ function generateNewCard() {
     removeElementById('turnValidMessage');
     removeElementById('validateAgainMessage');
 
+    document.getElementById('turn-valid-heading').innerHTML = '';
+    document.getElementById('validate-again-heading').innerHTML = '';
+
     // generating a card number:
-    let randomCard = generateJcbCard(); // to generate a JCB card
+    const arraysOfCards = [
+        generateJcbCard(),
+        generateDcNaCard()
+    ]
+    let randomCard = arraysOfCards[Math.floor(Math.random() * arraysOfCards.length)]; // to generate a JCB card
     let cardCo = getCardCompany(randomCard); // shows which company issued the card
 
     // creating the message:
@@ -281,9 +288,14 @@ function generateNewCard() {
         validatingMessage.style.marginTop = '2rem';
         validatingMessage.style.fontWeight = 'bold';
 
+        removeElementById('validateButton'); // TESTING
+
         if (validateCred(randomCard) === true) {
             validatingMessage.innerHTML = 'Your card is valid.';
             validatingMessage.style.color = 'green';
+            document.getElementById('turn-valid-heading').innerHTML = ''; // TESTING
+            removeElementById('turnValidButton'); // TESTING
+            document.getElementById('validate-again-heading').innerHTML = ''; // TESTING
         } else if (validateCred(randomCard) === false) {
             validatingMessage.innerHTML = 'Your card is invalid.';
             validatingMessage.style.color = 'red';
@@ -305,7 +317,9 @@ function generateNewCard() {
                 fixedCard.style.marginTop = '2rem';
                 document.getElementById('turn-valid-section').appendChild(fixedCard);
 
-                document.getElementById('validate-again-heading').innerHTML = 'Step 4. Validate the card again.';
+                removeElementById('turnValidButton'); // TESTING
+
+                document.getElementById('validate-again-heading').innerHTML = '(Optional: Step 4.) Validate the card again.';
                 document.getElementById('validate-again-section').appendChild(validateAgainButton);
 
                 function validateAgain() {
@@ -316,8 +330,10 @@ function generateNewCard() {
                     validateAgainMessage.style.marginTop = '2rem';
                     validateAgainMessage.style.fontWeight = 'bold';
 
+                    removeElementById('validateAgainButton');
+
                     if (validateCred(correctedCard) === true) {
-                        validateAgainMessage.innerHTML = 'Your card is definitely valid.';
+                        validateAgainMessage.innerHTML = 'Your card is now definitely valid.';
                         validateAgainMessage.style.color = 'green';
                     } else {
                         validateAgainMessage.innerHTML = 'This did not work as expected. Your new card is also invalid.';

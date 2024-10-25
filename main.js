@@ -14,11 +14,7 @@ const validateCred = cardArray => {
         sumCheck += digit;
     }
 
-    if (sumCheck % 10 === 0) {
-        return true;
-    } else {
-        return false;
-    }
+    return sumCheck % 10 === 0;
 }
 
 // function to identify the card company for a single card:
@@ -136,6 +132,14 @@ const turnInvalidCardValid = cardArr => {
 
 // testing cards from this site: https://www.freeformatter.com/credit-card-number-generator-validator.html
 
+// function to generate randomness (to be applied within specific card company functions):
+function generateRandomness(card) {
+    if (Math.floor(Math.random() * 2)) {
+        card = turnInvalidCardValid(card);
+    }
+    return card;
+} 
+
 //JCB: begins with 3528-3589; length: 16-19
 function generateJcbCard(){
     let randomCard = [3, 5];
@@ -149,15 +153,9 @@ function generateJcbCard(){
             randomCard.push(Math.floor(Math.random() * 10));
         }
     }
-
-    // a 50-50 chance of making the card valid or invalid:
-    let fiftyFifty = Math.floor(Math.random() *2);
-    if (fiftyFifty === 1) {
-        randomCard = turnInvalidCardValid(randomCard);
-    }
+    randomCard = generateRandomness(randomCard);
     return randomCard; 
 };
-
 
 // Diners Club - North America: begins with 54; length 16 digits
 function generateDcNaCard() {
@@ -166,11 +164,7 @@ function generateDcNaCard() {
     for (let i = 2; i < 16; i++) {
         randomCard.push(Math.floor(Math.random() * 10));
     }
-    // a 50-50 chance of making the card valid or invalid:
-    let fiftyFifty = Math.floor(Math.random() *2);
-    if (fiftyFifty === 1) {
-        randomCard = turnInvalidCardValid(randomCard);
-    }
+    randomCard = generateRandomness(randomCard);
     return randomCard; 
 }
 
@@ -249,6 +243,8 @@ function generateNewCard() {
 
     document.getElementById('turn-valid-heading').innerHTML = '';
     document.getElementById('validate-again-heading').innerHTML = '';
+    removeElementById('turnValidButton');
+    removeElementById('validateAgainButton');
 
     // generating a card number:
     const arraysOfCards = [
@@ -260,7 +256,8 @@ function generateNewCard() {
 
     // creating the message:
     let newCardMessage = document.createElement('p');
-    let phrase = "Your card number is: <br><br>" + randomCard.join('') + " | " + cardCo;
+    let cardNumber = randomCard.join('');
+    let phrase = `The card number is:<br><br><span>${cardNumber} | ${cardCo}</span>`;
     newCardMessage.innerHTML = phrase;
     newCardMessage.id = 'cardMessage';
 
@@ -291,17 +288,17 @@ function generateNewCard() {
         removeElementById('validateButton'); // TESTING
 
         if (validateCred(randomCard) === true) {
-            validatingMessage.innerHTML = 'Your card is valid.';
+            validatingMessage.innerHTML = 'This card number is valid.';
             validatingMessage.style.color = 'green';
             document.getElementById('turn-valid-heading').innerHTML = ''; // TESTING
             removeElementById('turnValidButton'); // TESTING
             document.getElementById('validate-again-heading').innerHTML = ''; // TESTING
         } else if (validateCred(randomCard) === false) {
-            validatingMessage.innerHTML = 'Your card is invalid.';
+            validatingMessage.innerHTML = 'This card number is invalid.';
             validatingMessage.style.color = 'red';
 
             // step 3 section gets added in case it's a faulty card:
-            document.getElementById('turn-valid-heading').innerHTML = '(Optional: Step 3.) Turn your invalid card valid.';
+            document.getElementById('turn-valid-heading').innerHTML = '(Optional: Step 3.) Turn an invalid card valid.';
             document.getElementById('turn-valid-section').appendChild(turnValidButton);
 
             // generating a new valid number:
@@ -311,7 +308,8 @@ function generateNewCard() {
                 
                 let correctedCard = turnInvalidCardValid(randomCard);
                 let fixedCard = document.createElement('p');
-                let newMessage = "The corrected card number is: <br><br>" + correctedCard.join('') + " | " + cardCo;
+                let cardNumber = correctedCard.join('');
+                let newMessage = `The corrected card number is:<br><br><span>${cardNumber} | ${cardCo}</span>`;
                 fixedCard.innerHTML = newMessage;
                 fixedCard.id = 'turnValidMessage';
                 fixedCard.style.marginTop = '2rem';
@@ -333,10 +331,10 @@ function generateNewCard() {
                     removeElementById('validateAgainButton');
 
                     if (validateCred(correctedCard) === true) {
-                        validateAgainMessage.innerHTML = 'Your card is now definitely valid.';
+                        validateAgainMessage.innerHTML = 'The card number is now definitely valid.';
                         validateAgainMessage.style.color = 'green';
                     } else {
-                        validateAgainMessage.innerHTML = 'This did not work as expected. Your new card is also invalid.';
+                        validateAgainMessage.innerHTML = 'This did not work as expected. The new card is also invalid.';
                         validateAgainMessage.style.color = 'red';
                     }
                     document.getElementById('validate-again-section').appendChild(validateAgainMessage);

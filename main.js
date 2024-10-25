@@ -1,3 +1,4 @@
+
 // function to validate a credit card:
 const validateCred = cardArray => {
     let arrayCopy = cardArray.slice().reverse(); // making a copy; reversing the array to access from the left side 
@@ -17,13 +18,58 @@ const validateCred = cardArray => {
     return sumCheck % 10 === 0;
 }
 
+
 // function to identify the card company for a single card:
 
+function getCardCompany(cardArray) {
+    // Convert the array of digits into a string
+    const cleanedNumber = cardArray.join('');
+
+    // Define the card issuers with their respective IIN ranges and lengths
+    const cardIssuers = [
+        { name: "American Express", prefixes: ["34", "37"], lengths: [15] },
+        { name: "Diners Club - Carte Blanche", prefixes: ["300", "301", "302", "303", "304", "305"], lengths: [14] },
+        { name: "Diners Club - International", prefixes: ["36"], lengths: [14] },
+        { name: "Diners Club - USA & Canada", prefixes: ["54"], lengths: [16] },
+        { name: "Discover", prefixes: ["6011", "622126", "622925", "644", "645", "646", "647", "648", "649", "65"], lengths: [16, 17, 18, 19] },
+        { name: "InstaPayment", prefixes: ["637", "638", "639"], lengths: [16] },
+        { name: "JCB", prefixes: ["3528", "3529", "353", "354", "355", "356", "357", "358"], lengths: [16, 17, 18, 19] },
+        { name: "Maestro", prefixes: ["5018", "5020", "5038", "5893", "6304", "6759", "6761", "6762", "6763"], lengths: [16, 17, 18, 19] },
+        { name: "MasterCard", prefixes: ["51", "52", "53", "54", "55", "222100", "222101", "222102", "222103", "222104", "222105", "222106", "222107", "222108", "222109", "222110", "272099"], lengths: [16] },
+        { name: "Visa", prefixes: ["4"], lengths: [13, 16, 19] },
+        { name: "Visa Electron", prefixes: ["4026", "417500", "4508", "4844", "4913", "4917"], lengths: [16] }
+    ];
+
+    // Check each card issuer
+    for (const issuer of cardIssuers) {
+        const matchesPrefix = issuer.prefixes.some(prefix => cleanedNumber.startsWith(prefix));
+        const matchesLength = issuer.lengths.includes(cleanedNumber.length);
+
+        if (matchesPrefix && matchesLength) {
+            return `${issuer.name}`;
+        }
+    }
+
+    return "Unknown credit card issuer";
+}
+
+
+/*
 const getCardCompany = card => {
     if ((card[0] === 3 && card[1] === 4) || (card[0] === 3 && card[1] === 7)) { // Amex begins with 34 or 37
         return'American Express';
     } else if (card[0] === 3 && card[1] === 5 ){  // JCB range is actually 3528–3589
         return 'JCB';
+    } else if ((card[0] === 5 && card[1] === 0 && card[2] === 1 && card[3] === 8) || // Maestro begins with 5018, 5020, 5038, 5893, 6304, 6759, 6761, 6762, 6763
+    (card[0] === 5 && card[1] === 0 && card[2] === 2 && card[3] === 0) || 
+    (card[0] === 5 && card[1] === 0 && card[2] === 3 && card[3] === 8) || 
+    (card[0] === 5 && card[1] === 8 && card[2] === 9 && card[3] === 3) || 
+    (card[0] === 6 && card[1] === 3 && card[2] === 0 && card[3] === 4) || 
+    (card[0] === 6 && card[1] === 7 && card[2] === 5 && card[3] === 9) || 
+    (card[0] === 6 && card[1] === 7 && card[2] === 6 && card[3] === 1) || 
+    (card[0] === 6 && card[1] === 7 && card[2] === 6 && card[3] === 2) || 
+    (card[0] === 6 && card[1] === 7 && card[2] === 6 && card[3] === 3)){
+    return 'Maestro';
     } else if ((card[0] === 3 && card[1] === 0 && card[2] === 0) || // Diners Club – Carte Blanche begins with 300, 301, 302, 303, 304, 305
                (card[0] === 3 && card[1] === 0 && card[2] === 1) || 
                (card[0] === 3 && card[1] === 0 && card[2] === 2) || 
@@ -33,7 +79,7 @@ const getCardCompany = card => {
         return 'Diners Club – Carte Blanche';
     } else if (card[0] === 3 && card[1] === 6) { // Diners Club – International begins with 36
         return 'Diners Club – International';
-    } else if (card[0] === 5 && card[1] === 4) { // Diners Club – USA & Canada begins with 54
+    } else if (card[0] === 5 && card[1] === 4) { // Diners Club – USA & Canada begins with 54 (length 16)
         return 'Diners Club – USA & Canada';
     } else if ((card[0] === 4 && card[1] === 0 && card[2] === 3 && card[3] === 6) || // Visa Electron begins with 4026, 417500, 4508, 4844, 4913, 4917
                (card[0] === 4 && card[1] === 1 && card[2] === 7 && card[4] === 5 && card[5] === 0 && card[6] === 0) || 
@@ -56,17 +102,7 @@ const getCardCompany = card => {
                (card[0] === 2 && card[1] === 6) ||
                (card[0] === 2 && card[1] === 7)){
         return 'Mastercard';
-    } else if ((card[0] === 5 && card[1] === 0 && card[2] === 1 && card[3] === 8) || // Maestro begins with 5018, 5020, 5038, 5893, 6304, 6759, 6761, 6762, 6763
-               (card[0] === 5 && card[1] === 0 && card[2] === 2 && card[3] === 0) || 
-               (card[0] === 5 && card[1] === 0 && card[2] === 3 && card[3] === 8) || 
-               (card[0] === 5 && card[1] === 8 && card[2] === 9 && card[3] === 3) || 
-               (card[0] === 6 && card[1] === 3 && card[2] === 0 && card[3] === 4) || 
-               (card[0] === 6 && card[1] === 7 && card[2] === 5 && card[3] === 9) || 
-               (card[0] === 6 && card[1] === 7 && card[2] === 6 && card[3] === 1) || 
-               (card[0] === 6 && card[1] === 7 && card[2] === 6 && card[3] === 2) || 
-               (card[0] === 6 && card[1] === 7 && card[2] === 6 && card[3] === 3)){
-        return 'Maestro';
-    } else if ((card[0] === 6 && card[1] === 0 && card[2] === 1 && card[3] === 1) || // Discover begins with 6011, 622126-622925, 644, 645, 647, 648, 649, 65
+    }  else if ((card[0] === 6 && card[1] === 0 && card[2] === 1 && card[3] === 1) || // Discover begins with 6011, 622126-622925, 644, 645, 647, 648, 649, 65
                (card[0] === 6 && card[1] === 4 && card[2] === 4) || // actually it's a range: 622126-622925
                (card[0] === 6 && card[1] === 4 && card[2] === 5) ||
                (card[0] === 6 && card[1] === 4 && card[2] === 7) ||
@@ -82,6 +118,7 @@ const getCardCompany = card => {
             return 'Unknown company';
     }
 }
+*/
 
 // function to create an array from a string of number:
 
@@ -130,7 +167,7 @@ const turnInvalidCardValid = cardArr => {
     }
 }
 
-// testing cards from this site: https://www.freeformatter.com/credit-card-number-generator-validator.html
+// getting details about the cards from this site: https://www.freeformatter.com/credit-card-number-generator-validator.html
 
 // function to generate randomness (to be applied within specific card company functions):
 function generateRandomness(card) {
@@ -168,45 +205,136 @@ function generateDcNaCard() {
     return randomCard; 
 }
 
-const dcNa1 = [5, 4, 4, 6, 6, 2, 8, 0, 5, 8, 7, 7, 8, 7, 5, 2]
-for (let i=0; i < 13; i++) {
-    dcNa1.push(Math.floor(Math.random() * 10));
-}
-// Diners Club - Carte Blanche: begins with 300-305
-const dcCb1 = [3, 0, 3, 1, 9, 2, 7, 9, 4, 8, 8, 0, 0, 9]
-const dcCb2 = [3, 0, 2, 2, 8, 5, 1, 8, 2, 1, 3, 6, 4, 1]
-const dcCb3 = [3, 0, 3, 7, 5, 0, 0, 8, 9, 2, 6, 2, 6, 8]
-const dcCb4 = [3, 0, 4]
-for (let i=0; i < 13; i++) {
-    dcCb4.push(Math.floor(Math.random() * 9));
-}
-// Diners Club - International: begins with 36
-const dcI1 = [3, 6, 8, 9, 6, 4, 8, 9, 9, 4, 7, 9, 9, 3]
-const dcI2 = [3, 6, 3, 9, 3, 0, 9, 6, 2, 5, 7, 4, 4, 6]
-const dcI3 = [3, 6, 0, 4, 7, 0, 0, 0, 7, 7, 5, 4, 5]
-// Maestro: begins with 5018, 5020, 5038, 5893, 6304, 6759, 6761, 6762, 6763
-const mae1 = [6, 7, 6, 2, 5, 8, 1, 2, 6, 8, 2, 0, 3, 7, 4, 6]
-const mae2 = [6, 7, 6, 3, 2, 6, 0, 0, 7, 5, 0, 3, 1, 1, 1, 8]
-const mae3 = [5, 0, 3, 8, 8, 0, 4, 1, 4, 4, 9, 9, 3, 8, 1, 3]
-// Visa Electron: begins with 4026, 417500, 4508, 4844, 4913, 4917
-const visaEl1 = [4, 0, 4, 4, 8, 6, 4, 0, 7, 6, 9, 3, 8, 0, 0, 1]
-const visaEl2 = [4, 8, 4, 4, 2, 0, 4, 0, 6, 2, 9, 2, 5, 8, 7, 0]
-const visaEl3 = [4, 9, 1, 3, 8, 7, 4, 7, 3, 9, 1, 0, 4, 9, 3, 3]
-// InstaPayment: begins with 637, 638, 639	
-const instaPay1 = [6, 3, 7, 3, 7, 6, 5, 0, 7, 6, 0, 3, 8, 1, 0, 2]
-const instaPay2 = [6, 3, 9, 4, 7, 9, 4, 5, 4, 7, 8, 4, 2, 7, 6, 6]
-const instaPay3 = [6, 3, 8, 8, 7, 5, 3, 4, 4, 8, 5, 8, 6, 1, 0, 0]
-// Discover : begins with 6011, 622126 to 622925, 644, 645, 646, 647, 648, 649, 65
-const discover1 = [6, 0, 1, 1, 2, 4, 3, 0, 2, 6, 1, 0, 0, 1, 4, 2]
-const discover2 = [6, 4, 4, 5, 1, 5, 2, 1, 7, 5, 5, 4, 8, 0, 2, 2]
-const discover3 = [6, 4, 7, 1, 0, 7, 1, 0, 0, 6, 9, 0, 8, 1, 0, 0]
-// American Express: begins with 34, 37:
-const amex1 = [3, 4, 6, 7, 8, 1, 1, 7, 5, 7, 1, 6, 3, 4, 7]
-const amex2 = [3, 7, 2, 1, 4, 7, 1, 8, 2, 1, 7, 6, 0, 5, 0]
-// MasterCard: begins with 51, 52, 53, 54, 55, 222100-272099:
-const masterC1 = [2, 7, 2, 0, 9, 9, 4, 0, 0, 4, 0, 5, 8, 5, 0, 6]
-const masterC2 = [5, 4, 8, 4, 9, 3, 9, 4, 2, 3, 2, 8, 2, 2, 2, 0]
+// Diners Club - Carte Blanche: begins with 300, 301, 302, 303, 304, 305. Length: 14
+function generateDcCbCard() {
+    let randomCard = [3, 0];
 
+    for (let i=2; i < 14; i++) {
+        if (i === 2) { // third digit needsd to be 0-5
+            randomCard.push(Math.floor(Math.random() * 6));
+        } else {
+            randomCard.push(Math.floor(Math.random() * 10));
+        }
+    }
+    randomCard = generateRandomness(randomCard);
+    return randomCard; 
+}
+
+// Diners Club - International: begins with 36; length: 14
+function generateDcIntCard() {
+    let randomCard = [3, 6];
+
+    for (let i = 2; i < 14; i++) {
+        randomCard.push(Math.floor(Math.random() * 10));
+    }
+    randomCard = generateRandomness(randomCard);
+    return randomCard; 
+}
+
+// Maestro: begins with 5018, 5020, 5038, 5893, 6304, 6759, 6761, 6762, 6763; length: 16-19
+function generateMaestroCard() {
+    let randomCard = [];
+    let beginnings = [5018, 5020, 5038, 5893, 6304, 6759, 6761, 6762, 6763];
+    randomCard.push(beginnings[Math.floor(Math.random() * beginnings.length)]);
+
+    for (let i=4; i < Math.floor(Math.random() * 4) + 16 ; i++) { // length 16-19 
+        randomCard.push(Math.floor(Math.random() * 10));
+    }
+    randomCard = generateRandomness(randomCard);
+    return randomCard;
+}
+
+// Visa Electron: begins with 4026, 417500, 4508, 4844, 4913, 4917; length 16
+function generateVisaElCard() {
+    let randomCard = [];
+    let beginnings = [4026, 417500, 4508, 4844, 4913, 4917];
+    randomCard.push(beginnings[Math.floor(Math.random() * beginnings.length)]);
+    if (randomCard[2] === 7) {
+        randomCard.push(0);
+        randomCard.push(0);
+        for (let i = 6; i < 16; i++) {
+            randomCard.push(Math.floor(Math.random() * 10));
+        }
+    } else {
+        for (let i=4; i< 16; i++) {
+            randomCard.push(Math.floor(Math.random() * 10));
+        }
+    }
+    randomCard = generateRandomness(randomCard);
+    return randomCard;
+}
+
+// InstaPayment: begins with 637, 638, 639; length: 16
+function generateInstaPayCard() {
+    let randomCard = [];
+    let beginnings = [637, 638, 639];
+    randomCard.push(beginnings[Math.floor(Math.random() * beginnings.length)]);
+
+    for (let i=4; i < 16 ; i++) { 
+        randomCard.push(Math.floor(Math.random() * 10));
+    }
+    randomCard = generateRandomness(randomCard);
+    return randomCard;
+}
+
+// American Express: begins with 34, 37; length: 15:
+function generateAmexCard() {
+    let randomCard = [3];
+    if (Math.floor(Math.random() *2) === 1) {
+        randomCard.push(4);
+    } else {
+        randomCard.push(7);
+    }
+    for (i=2; i<15; i++) {
+        randomCard.push(Math.floor(Math.random() * 10));
+    }
+    randomCard = generateRandomness(randomCard);
+    return randomCard;
+}
+
+
+// MasterCard: begins with 51-55, 222100-272099; length 16
+function generateMasterCard() {
+    let card = [5]; // Initialize the card with the first digit
+
+    // Determine if it's a `5` or `2` prefix-based Mastercard
+    if (card[0] === 5) {
+        card.push(Math.floor(Math.random() * 5) + 1); // Ensures the range [51-55]
+    } else {
+        // This case will only run if the first element is `2`, signifying a BIN in the 222100-272099 range
+        card = [2, 2]; // Start with `22` for BIN range 222100 - 272099
+
+        // Define the third and fourth digits based on Mastercard's BIN rules
+        let thirdDigit = Math.floor(Math.random() * 5) + 2; // Range for third digit is 2-6
+        let fourthDigit = thirdDigit === 2 ? Math.floor(Math.random() * 2) : Math.floor(Math.random() * 10);
+        card.push(thirdDigit, fourthDigit);
+    }
+
+    // Fill in the remaining digits to reach 16 digits total
+    while (card.length < 16) {
+        card.push(Math.floor(Math.random() * 10));
+    }
+
+    return card;
+}
+
+// Discover : begins with 6011, 622126-622925, 644-649, 65; length: 16-19
+function generateDiscoverCard() {
+    let randomCard = [];
+    // Starting digits for Discover cards
+    const beginnings = [6011, 622126, 622925, 644, 645, 646, 647, 648, 649, 65];
+    
+    // Randomly select a beginning
+    const start = beginnings[Math.floor(Math.random() * beginnings.length)];
+    randomCard.push(...start.toString().split('').map(Number)); // Spread the digits into the array
+
+    // Fill remaining digits to make it a total of 16 digits
+    while (randomCard.length < 16) {
+        randomCard.push(Math.floor(Math.random() * 10));
+    }
+
+    return randomCard;
+}
 
 // function to create buttons: 
 function createNewButton(id, text, bgColor, textColor) {
@@ -249,9 +377,17 @@ function generateNewCard() {
     // generating a card number:
     const arraysOfCards = [
         generateJcbCard(),
-        generateDcNaCard()
+        generateDcNaCard(),
+        generateDcCbCard(),
+        generateDcIntCard(),
+        generateAmexCard(),
+        generateMaestroCard(),
+        generateVisaElCard(),
+        generateInstaPayCard(),
+        generateMasterCard(),
+        generateDiscoverCard()
     ]
-    let randomCard = arraysOfCards[Math.floor(Math.random() * arraysOfCards.length)]; // to generate a JCB card
+    let randomCard = arraysOfCards[Math.floor(Math.random() * arraysOfCards.length)]; // to generate a card
     let cardCo = getCardCompany(randomCard); // shows which company issued the card
 
     // creating the message:

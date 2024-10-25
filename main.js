@@ -1,6 +1,6 @@
 // function to validate a credit card:
-const validateCred = array => {
-    let arrayCopy = array.slice(); // making a copy in order not to mutate the original array
+const validateCred = cardArray => {
+    let arrayCopy = cardArray.slice(); // making a copy in order not to mutate the original array
     arrayCopy = arrayCopy.toReversed(); // reversing the array to access from the left side 
 
     // let mutatedArray = []; // this array will contain the digits which have been operated on
@@ -133,21 +133,35 @@ const turnInvalidCardValid = cardArr => {
             return arrayCopy;
         }
     } else { // if a card is valid, it won't be changed
-        return cardArr;
+        if (validateCred(arrayCopy) === true) { // but still checked again if it's valid
+            return arrayCopy;
+        }
     }
 }
 
-
 // testing cards from this site: https://www.freeformatter.com/credit-card-number-generator-validator.html
 
-//JCB: begins with 3528-3589
-const jcb1 = [3, 5, 4, 2, 5, 1, 0, 7, 7, 9, 8, 8, 9, 4, 8, 5]
-const jcb2 = [3, 5, 2, 8, 1, 0, 0, 6, 5, 7, 1, 5, 0, 4, 1, 8]
-const jcb3 = [3, 5, 3, 9, 6, 7, 2, 4, 0, 4, 5, 0, 3, 6, 1, 8, 4, 8, 5]
-const jcb4 = [3, 5, 5, 4]; 
-for (let i=0; i < 14 ; i++) { // generating random card numbers
-    jcb4.push(Math.floor(Math.random() * 10));
+//JCB: begins with 3528-3589; length: 16-19
+function generateJcbCard(){
+    let randomCard = [3, 5];
+
+    for (let i=2; i < (Math.floor(Math.random() * 4) + 17) ; i++) { // length 16-19 
+        if (i === 2) { // third digit needs to be 2-8
+            randomCard.push(Math.floor(Math.random() * 7) + 2);
+        } else if (i === 3 && randomCard[2] === 2) { // if 3rd digit is 2, then 4th should be 8-9
+            randomCard.push(Math.floor(Math.random() * 2) + 8); 
+        } else {
+            randomCard.push(Math.floor(Math.random() * 10));
+        }
+    }
+    // a 50-50 chance of making the card valid or invalid:
+    let fiftyFifty = Math.floor(Math.random() *2);
+    if (fiftyFifty === 1) {
+        turnInvalidCardValid(randomCard);
+    }
+    return randomCard; // it should be 50/50 that it's a correct or faulty card 
 };
+
 
 // Diners Club - North America: begins with 54
 const dcNa1 = [5, 4, 4, 6, 6, 2, 8, 0, 5, 8, 7, 7, 8, 7, 5, 2]
@@ -192,7 +206,7 @@ const masterC1 = [2, 7, 2, 0, 9, 9, 4, 0, 0, 4, 0, 5, 8, 5, 0, 6]
 const masterC2 = [5, 4, 8, 4, 9, 3, 9, 4, 2, 3, 2, 8, 2, 2, 2, 0]
 
 const newBatch = [
-    jcb1, jcb2, jcb3, jcb4,
+    /*jcb1,
     dcNa1, dcNa2, dcNa3,
     dcCb1, dcCb2, dcCb3, dcCb4,
     dcI1, dcI2, dcI3,
@@ -201,121 +215,128 @@ const newBatch = [
     instaPay1, instaPay2, instaPay3,
     discover1, discover2, discover3,
     amex1, amex2,
-    masterC1, masterC2
+    masterC1, masterC2*/
 ]
 
-// website interactivity:
+// function to create buttons: 
+function createNewButton(id, text, bgColor, textColor) {
+    let button = document.createElement('button');
+    button.id = id;
+    button.innerHTML = text;
+    button.style.backgroundColor = bgColor;
+    button.style.color = textColor;
+    return button;
+}
 
-document.getElementById('try-card').innerHTML = 'Step 1. Generate a new card number to try.';
-let tryCardElement = document.getElementById('try-card');
-tryCardElement.style.color = 'black';
-
-// generate a card number button interactivity:
-
-let generateCardButton = document.createElement('button');
-generateCardButton.id = 'cardBox';
-generateCardButton.innerHTML = 'Generate a card number';
-document.getElementById('generate-a-new').appendChild(generateCardButton);
+let generateCardButton = document.getElementById('cardButton');
 generateCardButton.style.marginBottom = '2rem';
-generateCardButton.style.backgroundColor = 'red';
+
+let validateCardButton = createNewButton('validateButton', 'Validate the card', 'blue', 'white');
+let turnValidButton = createNewButton('turnValidButton', 'Turn the card valid', 'blue', 'white');
+let validateAgainButton = createNewButton('validateAgainButton', 'Validate again', 'blue', 'white');
 
 
-let validateCardButton = document.createElement('button');
-validateCardButton.id = 'validateButton';
-validateCardButton.innerHTML = 'Validate the card';
-validateCardButton.style.backgroundColor = 'blue';
-validateCardButton.style.color = 'white';
-
-let turnInvalidValidButton = document.createElement('button');
-turnInvalidValidButton.id = 'turnInvalidValidButton';
-turnInvalidValidButton.innerHTML = 'Turn the card valid';
-turnInvalidValidButton.style.backgroundColor = 'blue';
-turnInvalidValidButton.style.color = 'white';
-
+// function to remove elements:
+function removeElementById(id) {
+    let element = document.getElementById(id);
+    if (element) {
+        element.remove();
+    }
+}
 
 function generateNewCard() {
-    function deletePreviousCard() { // clearing out the previous message;
-        let previousCard = document.getElementById('cardMessage');
-        if (previousCard) {
-            previousCard.remove();
-        }
-        let validateDiv = document.getElementById('trueMessage');
-        if (validateDiv) {
-            validateDiv.remove();
-        }
-        let turnInvalidValidDiv = document.getElementById('fixed-card');
-        if (turnInvalidValidDiv) {
-            turnInvalidValidDiv.remove();
-        }
-    };
-    deletePreviousCard(); 
-    let randomCard = newBatch[Math.floor(Math.random() * newBatch.length)];
-    let newNo = document.createElement('p');
-    let cardCo = getCardCompany(randomCard);
-    let cardMessage = "Your card number is: <br><br>" + randomCard.join('') + " | " + cardCo;
-    newNo.innerHTML = cardMessage;
-    newNo.id = 'cardMessage';
-    document.getElementById('generate-a-new').appendChild(newNo);
-    generateCardButton.innerHTML = 'Generate again';
+    // clearing out the previous message:
+    removeElementById('cardMessage');
+    removeElementById('validatingMessage');
+    removeElementById('turnValidMessage');
+    removeElementById('validateAgainMessage');
+
+    // generating a card number:
+    let randomCard = generateJcbCard(); // to generate a JCB card
+    let cardCo = getCardCompany(randomCard); // shows which company issued the card
+
+    // creating the message:
+    let newCardMessage = document.createElement('p');
+    let phrase = "Your card number is: <br><br>" + randomCard.join('') + " | " + cardCo;
+    newCardMessage.innerHTML = phrase;
+    newCardMessage.id = 'cardMessage';
+
+    // appending the new card message below the generate button:
+    document.getElementById('generate-new-card-section').appendChild(newCardMessage); 
+
+    // changing the red button in step 1 to blue:
+    generateCardButton.innerHTML = 'Generate again'; 
     generateCardButton.style.backgroundColor = 'blue';
     generateCardButton.style.color = 'white';
 
-    // validating the card:
-    document.getElementById('validate-card').innerHTML = 'Step 2. Validate the card number.';
-    document.getElementById('validate-div').appendChild(validateCardButton);
+    // second section gets added automatically:
+    document.getElementById('validate-card-heading').innerHTML = 'Step 2. Validate the card number.'; // Step 2: validate card heading
+    document.getElementById('validate-card-section').appendChild(validateCardButton); // adding the validate card button
 
+    // validating a card:
     function validateCard() {
-        function deletePreviousValidation() { // clearing out the previous message;
-            let validateDiv = document.getElementById('trueMessage');
-            if (validateDiv) {
-                validateDiv.remove();
-            }
-            let turnInvalidValidDiv = document.getElementById('fixed-card');
-            if (turnInvalidValidDiv) {
-            turnInvalidValidDiv.remove();
-            }
-        };
-        deletePreviousValidation(); 
-        let trueMessage = document.createElement('p');
-        trueMessage.id = 'trueMessage';
-        trueMessage.style.marginTop = '2rem';
-        trueMessage.style.fontWeight = 'bold';
+        removeElementById('validatingMessage');
+        removeElementById('turnValidMessage');
+        removeElementById('validateAgainMessage');
+
+        // Generating a step 2 message to render to the DOM:
+        let validatingMessage = document.createElement('p');
+        validatingMessage.id = 'validatingMessage';
+        validatingMessage.style.marginTop = '2rem';
+        validatingMessage.style.fontWeight = 'bold';
+
         if (validateCred(randomCard) === true) {
-            trueMessage.innerHTML = 'Your card is valid.';
-            trueMessage.style.color = 'green';
-        } else {
-            trueMessage.innerHTML = 'Your card is invalid.';
-            trueMessage.style.color = 'red';
+            validatingMessage.innerHTML = 'Your card is valid.';
+            validatingMessage.style.color = 'green';
+        } else if (validateCred(randomCard) === false) {
+            validatingMessage.innerHTML = 'Your card is invalid.';
+            validatingMessage.style.color = 'red';
+
+            // step 3 section gets added in case it's a faulty card:
             document.getElementById('turn-valid-heading').innerHTML = '(Optional: Step 3.) Turn your invalid card valid.';
-            document.getElementById('turn-valid').appendChild(turnInvalidValidButton);
+            document.getElementById('turn-valid-section').appendChild(turnValidButton);
 
             // generating a new valid number:
             function turnValidFunction() {
-                function deletePreviousInvalidToValid() { // clearing out the previous message;
-                    let fixedDiv = document.getElementById('fixed-card');
-                    if (fixedDiv) {
-                        fixedDiv.remove();
-                    }
-                };
-                deletePreviousInvalidToValid(); 
-                correctCard = turnInvalidCardValid(randomCard);
+                removeElementById('turnValidMessage');
+                removeElementById('validateAgainMessage');
+                
+                let correctedCard = turnInvalidCardValid(randomCard);
                 let fixedCard = document.createElement('p');
-                let newMessage = "The corrected card number is: <br><br>" + correctCard.join('') + " | " + cardCo;
+                let newMessage = "The corrected card number is: <br><br>" + correctedCard.join('') + " | " + cardCo;
                 fixedCard.innerHTML = newMessage;
-                fixedCard.id = 'fixed-card';
+                fixedCard.id = 'turnValidMessage';
                 fixedCard.style.marginTop = '2rem';
-                document.getElementById('turn-valid').appendChild(fixedCard);
-            }
+                document.getElementById('turn-valid-section').appendChild(fixedCard);
 
-            turnInvalidValidButton.addEventListener('click', turnValidFunction);
+                document.getElementById('validate-again-heading').innerHTML = 'Step 4. Validate the card again.';
+                document.getElementById('validate-again-section').appendChild(validateAgainButton);
+
+                function validateAgain() {
+                    removeElementById('validateAgainMessage');
+
+                    let validateAgainMessage = document.createElement('p');
+                    validateAgainMessage.id = 'validateAgainMessage';
+                    validateAgainMessage.style.marginTop = '2rem';
+                    validateAgainMessage.style.fontWeight = 'bold';
+
+                    if (validateCred(correctedCard) === true) {
+                        validateAgainMessage.innerHTML = 'Your card is definitely valid.';
+                        validateAgainMessage.style.color = 'green';
+                    } else {
+                        validateAgainMessage.innerHTML = 'This did not work as expected. Your new card is also invalid.';
+                        validateAgainMessage.style.color = 'red';
+                    }
+                    document.getElementById('validate-again-section').appendChild(validateAgainMessage);
+                }
+                validateAgainButton.addEventListener('click', validateAgain);
+            }
+            turnValidButton.addEventListener('click', turnValidFunction);
         }
-        document.getElementById('validate-div').appendChild(trueMessage);
+        document.getElementById('validate-card-section').appendChild(validatingMessage);
+        turnValidButton.addEventListener('click', turnValidFunction);
     }
     validateCardButton.addEventListener('click', validateCard);
-
-    // turning an invalid card calid: 
-    /*if (validateCred(randomCard) === false) {
-    }*/
 }
 
 generateCardButton.addEventListener('click', generateNewCard);
@@ -406,12 +427,7 @@ Click on a particular card company logo:
 
 Done: Generates a card number: 
 Done: Click on a button to validate the card. Turns the card string to array. Validates the card. Tells the user.
-
-If invalid, click on a button to turn the card valid. 
-
-Turns invalid card array to valid.
-
-Returns the valid string. 
+Done: If invalid, click on a button to turn the card valid. Turns invalid card array to valid. Returns the valid string. 
 
 (On top of a correctly formatted card)
 

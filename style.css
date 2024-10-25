@@ -56,7 +56,8 @@ a {
 }
 
 button {
-    background-color: #63139d;
+    background-color: red;
+    color: white;
     font-family: "Roboto Mono";
     font-size: 1rem;
     padding: 6px 10px;
@@ -66,7 +67,7 @@ button {
 
 button:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #4d0f7d; /* Darker purple on hover */
+    background-color: darkred; 
 }
 
 /* header settings */

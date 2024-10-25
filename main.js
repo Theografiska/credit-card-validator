@@ -1,22 +1,18 @@
 // function to validate a credit card:
 const validateCred = cardArray => {
-    let arrayCopy = cardArray.slice(); // making a copy in order not to mutate the original array
-    arrayCopy = arrayCopy.toReversed(); // reversing the array to access from the left side 
-
-    // let mutatedArray = []; // this array will contain the digits which have been operated on
+    let arrayCopy = cardArray.slice().reverse(); // making a copy; reversing the array to access from the left side 
     let sumCheck = 0; // this is needed to check whether the sum modulo 10 is 0
 
     for (let i = 0; i < arrayCopy.length; i++) {
         let digit = arrayCopy[i];
         if (i % 2 === 1) {
             digit *= 2;
-        };
+        }
         if (digit > 9) {
             digit -= 9;
-        };
-        // mutatedArray.push(digit);
+        }
         sumCheck += digit;
-    };
+    }
 
     if (sumCheck % 10 === 0) {
         return true;
@@ -25,7 +21,7 @@ const validateCred = cardArray => {
     }
 }
 
-// function to get the card company for a single card:
+// function to identify the card company for a single card:
 
 const getCardCompany = card => {
     if ((card[0] === 3 && card[1] === 4) || (card[0] === 3 && card[1] === 7)) { // Amex begins with 34 or 37
@@ -89,7 +85,7 @@ const getCardCompany = card => {
     } else {
             return 'Unknown company';
     }
-    }
+}
 
 // function to create an array from a string of number:
 
@@ -106,8 +102,7 @@ const arrayFromString = string => {
 
 const turnInvalidCardValid = cardArr => {
     if (validateCred(cardArr) === false) {
-        let arrayCopy = cardArr.slice(); // making a copy in order not to mutate the original array
-        arrayCopy = arrayCopy.toReversed(); // reversing the array to access from the left side 
+        let arrayCopy = cardArr.slice().reverse(); 
 
         let sumCheck = 0;
         for (let i = 0; i < arrayCopy.length; i++) {
@@ -127,14 +122,14 @@ const turnInvalidCardValid = cardArr => {
             arrayCopy[0] += (10-remainder);
         }
 
-        arrayCopy = arrayCopy.toReversed(); // reversing the array again
+        arrayCopy = arrayCopy.reverse(); // reversing the array again
 
         if (validateCred(arrayCopy) === true) {
             return arrayCopy;
         }
     } else { // if a card is valid, it won't be changed
-        if (validateCred(arrayCopy) === true) { // but still checked again if it's valid
-            return arrayCopy;
+        if (validateCred(cardArr) === true) { // but still checked again if it's valid
+            return cardArr;
         }
     }
 }
@@ -145,7 +140,7 @@ const turnInvalidCardValid = cardArr => {
 function generateJcbCard(){
     let randomCard = [3, 5];
 
-    for (let i=2; i < (Math.floor(Math.random() * 4) + 17) ; i++) { // length 16-19 
+    for (let i=2; i < Math.floor(Math.random() * 4) + 16 ; i++) { // length 16-19 
         if (i === 2) { // third digit needs to be 2-8
             randomCard.push(Math.floor(Math.random() * 7) + 2);
         } else if (i === 3 && randomCard[2] === 2) { // if 3rd digit is 2, then 4th should be 8-9
@@ -154,21 +149,34 @@ function generateJcbCard(){
             randomCard.push(Math.floor(Math.random() * 10));
         }
     }
+
     // a 50-50 chance of making the card valid or invalid:
     let fiftyFifty = Math.floor(Math.random() *2);
     if (fiftyFifty === 1) {
-        turnInvalidCardValid(randomCard);
+        randomCard = turnInvalidCardValid(randomCard);
     }
-    return randomCard; // it should be 50/50 that it's a correct or faulty card 
+    return randomCard; 
 };
 
 
-// Diners Club - North America: begins with 54
+// Diners Club - North America: begins with 54; length 16 digits
+function generateDcNaCard() {
+    let randomCard = [5, 4];
+
+    for (let i = 2; i < 16; i++) {
+        randomCard.push(Math.floor(Math.random() * 10));
+    }
+    // a 50-50 chance of making the card valid or invalid:
+    let fiftyFifty = Math.floor(Math.random() *2);
+    if (fiftyFifty === 1) {
+        randomCard = turnInvalidCardValid(randomCard);
+    }
+    return randomCard; 
+}
+
 const dcNa1 = [5, 4, 4, 6, 6, 2, 8, 0, 5, 8, 7, 7, 8, 7, 5, 2]
-const dcNa2 = [5, 4, 9, 7, 5, 3, 3, 5, 0, 7, 2, 4, 3, 7, 1]
-const dcNa3 = [5, 4]
 for (let i=0; i < 13; i++) {
-    dcNa3.push(Math.floor(Math.random() * 10));
+    dcNa1.push(Math.floor(Math.random() * 10));
 }
 // Diners Club - Carte Blanche: begins with 300-305
 const dcCb1 = [3, 0, 3, 1, 9, 2, 7, 9, 4, 8, 8, 0, 0, 9]
@@ -205,18 +213,6 @@ const amex2 = [3, 7, 2, 1, 4, 7, 1, 8, 2, 1, 7, 6, 0, 5, 0]
 const masterC1 = [2, 7, 2, 0, 9, 9, 4, 0, 0, 4, 0, 5, 8, 5, 0, 6]
 const masterC2 = [5, 4, 8, 4, 9, 3, 9, 4, 2, 3, 2, 8, 2, 2, 2, 0]
 
-const newBatch = [
-    /*jcb1,
-    dcNa1, dcNa2, dcNa3,
-    dcCb1, dcCb2, dcCb3, dcCb4,
-    dcI1, dcI2, dcI3,
-    mae1, mae2, mae3,
-    visaEl1, visaEl2, visaEl3,
-    instaPay1, instaPay2, instaPay3,
-    discover1, discover2, discover3,
-    amex1, amex2,
-    masterC1, masterC2*/
-]
 
 // function to create buttons: 
 function createNewButton(id, text, bgColor, textColor) {
@@ -340,7 +336,6 @@ function generateNewCard() {
 }
 
 generateCardButton.addEventListener('click', generateNewCard);
-
 
 
 /* order of creating a website flow: 

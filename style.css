@@ -11,6 +11,7 @@ body {
     overflow: scroll;
     font-family: "Montserrat", sans-serif;
     font-size: 16px;
+    background: #f5f7fa; /* Light, neutral background color */
 }
 
 h1 {
@@ -33,7 +34,7 @@ h2 {
     font-family: "Roboto";
     font-size: 1.75rem;
     font-weight: 500;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
     position: relative;
     text-align: center;
 }
@@ -107,19 +108,21 @@ main {
 }
 
 .banner {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr;
     text-align: center;
-    justify-content: center;
-    margin-bottom: 4rem;
+    justify-items: center;
+    margin-bottom: 2rem;
 }
 
 #hero-section {
     margin-top: 6rem;
     margin-bottom: 6rem;
-    background-color: aliceblue;
+    border-radius: 1rem;
     padding: 4rem 4rem;
     width: 75%;
-    min-height: 60rem;
+    min-height: 30rem;
+    background: linear-gradient(135deg, #d0d8e8, #c4cde0); /* Slightly darker gradient for depth */
 }
 
 @media only screen and (max-width: 760px) {
@@ -148,21 +151,48 @@ main {
     justify-items: center;
 }
 
+/* form section – this is for getting card issuer input from user */
+
+form {
+    padding-bottom: 1rem;
+    color: black;
+}
+
+label {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 1rem;
+    text-align: left;
+}
+
+select {
+    font-size: .9rem;
+}
 /* buttons */
 button {
-    background-color: black;
-    color: white;
-    font-family: "Roboto Mono";
-    font-size: .9rem;
-    padding: 3px 3px;
-    border-radius: 0.25rem;
+    background: linear-gradient(145deg, #000d1a, #000611);
+    border: none;
+    color: #ffffff;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
     cursor: pointer;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8), -2px -2px 0px rgba(0, 0, 0, 0.8);
+    transition: all 0.2s ease-in-out;
     margin-bottom: 2rem;
 }
 
 button:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: darkblue;
+    background: linear-gradient(145deg, #000611, #000d1a);
+    box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.9), -1px -1px 0px rgba(0, 0, 0, 0.9);
+    transform: scale(1.03);
+}
+
+.button:active {
+    background: linear-gradient(145deg, #000d1a, #000611);
+    box-shadow: inset 1px 1px 0px rgba(0, 0, 0, 1);
+    transform: scale(0.98);
 }
 
 /* main button to generate a card */
@@ -180,6 +210,17 @@ button:hover {
 
 /* Card designs */
 
+#placeholderCard { /* placeholder card, before step 1 */
+    background: linear-gradient(145deg, #001242, #0a2a73);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(0, 0, 0, 0.3);
+    color: white;
+    font-family: 'Roboto Mono', "monospace";
+    padding: 3rem 2rem;
+    width: 320px;
+    height: 200px;
+    border-radius: 10px;
+    text-align: left;
+}
 #cardMessage { /* initial card, step 1 */
     background: linear-gradient(145deg, #001242, #0a2a73);
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(0, 0, 0, 0.3);
@@ -236,6 +277,11 @@ button:hover {
         height: 150px;
         padding: 1.2rem 1.6rem;
     }
+    #placeholderCard {
+        width: 240px;
+        height: 150px;
+        padding: 2rem 1.6rem;
+    }
     .chipImg {
         height: 20px;
         width: auto;
@@ -285,22 +331,39 @@ button:hover {
 }
 
 
-/* form section */
+/* about section */
 
-form {
-    padding-bottom: 1rem;
-    color: black;
+#aboutSection {
+    margin-bottom: 4rem;
+    padding: 4rem 2rem;
+    border-radius: 1rem;
+    width: 75%;
+    min-height: 30rem;
+    background: linear-gradient(135deg, #d0d8e8, #c4cde0); /* Slightly darker gradient for depth */
 }
 
-label {
-    display: inline-block;
-    margin-right: 10px;
-    font-size: 1rem;
+#aboutGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.paragraph {
+    text-align: left;
+    width: 85%;
+    line-height: 1.6; /* Increases space between lines for readability */
+}
+
+.paragraph p {
+    font-size: 1rem; /* Sets a base size for the paragraph text */
+}
+
+.paragraph h3 {
     text-align: left;
 }
 
-select {
-    font-size: .9rem;
+.paragraph a {
+    color: #03247e;
+    font-weight: bold;
 }
 
 /* footer */
@@ -310,9 +373,8 @@ footer {
     text-align: center;  
     padding: 1rem; 
     position: relative; 
-    top: 6rem;
     width: 100%;  
-    margin-top: 4rem;
+    margin-top: 2rem;
 }
 
 footer p {

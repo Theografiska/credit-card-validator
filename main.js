@@ -381,6 +381,7 @@ function generateNewCard() {
     removeElementById('validatingMessage');
     removeElementById('turnValidMessage');
     removeElementById('validateAgainMessage');
+    removeElementById('placeholderCard');
 
     document.getElementById('turn-valid-heading').innerHTML = '';
     document.getElementById('validate-again-heading').innerHTML = '';
@@ -440,11 +441,19 @@ function generateNewCard() {
         randomCard = arraysOfCards[10];
         cardCo = 'Visa Electron';
     } 
-
+    // generating the expiry dates:
+    let expiryDate;
+    function setExpiryDate() {
+        const currentDate = new Date();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Ensures two-digit month
+        const year = String(currentDate.getFullYear() + 3).slice(-2); // Gets the last two digits of the year
+        return expiryDate = `${month}/${year}`;
+    };
+    setExpiryDate();
     // creating the message:
     let newCardMessage = document.createElement('p');
     let cardNumber = randomCard.join('');
-    let phrase = `         <span class="companyFont">${cardCo}</span><br><img class="chipImg" src="resources/chip.png"><img class="contactlessImg" src="resources/contactless.png"><br><span class="numberFont">${cardNumber}</span><br><span class="cardHolder">John Doe    |    12/27</span>`;
+    let phrase = `<span class="companyFont">${cardCo}</span><br><img class="chipImg" src="resources/chip.png"><img class="contactlessImg" src="resources/contactless.png"><br><span class="numberFont">${cardNumber}</span><br><span class="cardHolder">John Doe    |    ${expiryDate}</span>`;
     newCardMessage.innerHTML = phrase;
     newCardMessage.id = 'cardMessage';
 
@@ -487,11 +496,18 @@ function generateNewCard() {
             function turnValidFunction() {
                 removeElementById('turnValidMessage');
                 removeElementById('validateAgainMessage');
-                
+                let expiryDate;
+                function setExpiryDate() {
+                    const currentDate = new Date();
+                    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Ensures two-digit month
+                    const year = String(currentDate.getFullYear() + 3).slice(-2); // Gets the last two digits of the year
+                    return expiryDate = `${month}/${year}`;
+                };
+                setExpiryDate();
                 let correctedCard = turnInvalidCardValid(randomCard);
                 let fixedCard = document.createElement('p');
                 let cardNumber = correctedCard.join('');
-                let newMessage = `         <span class="companyFont">${cardCo}</span><br><img class="chipImg" src="resources/chip.png"><img class="contactlessImg" src="resources/contactless.png"><br><span class="numberFont">${cardNumber}</span><br><span class="cardHolder">John Doe    |    12/27</span>`;
+                let newMessage = `         <span class="companyFont">${cardCo}</span><br><img class="chipImg" src="resources/chip.png"><img class="contactlessImg" src="resources/contactless.png"><br><span class="numberFont">${cardNumber}</span><br><span class="cardHolder">John Doe    |    ${expiryDate}</span>`;
                 fixedCard.innerHTML = newMessage;
                 fixedCard.id = 'turnValidMessage';
                 fixedCard.style.marginTop = '2rem';

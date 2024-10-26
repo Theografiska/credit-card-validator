@@ -19,7 +19,7 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="#">About</a></li>
+                    <li><a href="#aboutSection">About</a></li>
                 </ul>
             </nav>
         </header>
@@ -28,7 +28,7 @@
             <!-- Banner section -->
             <div class="banner">
                 <div id="hero-section">
-                    <h1>Validate a Card Number</h1>
+                    <h2>Generate and Validate Credit Card Numbers</h2>
                     <h3 id="generate-card-heading" class="step1">Step 1. Generate a new credit card number.</h3>
                     <div id="generate-new-card-section" class="step1">
                         <form>
@@ -50,6 +50,10 @@
                                 <!--<input type="submit" value="Send"> --> <!--commenting out for now-->
                         </form>
                         <button id="cardButton" class="step1">Generate card</button>
+                        <div id="placeholderCard">
+                            <p>
+                                <img class="chipImg" src="resources/chip.png"><img class="contactlessImg" src="resources/contactless.png"><br>
+                        </div>
                     </div>
                     <h3 id="validate-card-heading" class="step2"></h3>
                     <div id="validate-card-section" class="step2">
@@ -61,10 +65,35 @@
                     <div id="validate-again-section" class="step4">  
                         <h3 id="validate-again-heading" class="step4"></h3>
                     </div>
-                   
+                </div>
+                <div id="aboutSection">
+                    <h2>About the Project</h2>
+                    <div id="aboutGrid">
+                        <div id="other" class="paragraph">
+                            <h3>Other stuff</h3>
+                            <p>This Credit Card Validator tool is a personal portfolio project that showcases 
+                                a simple web application for validating credit card numbers using the Luhn algorithm. 
+                                Users can easily generate card numbers by selecting a credit card company from a dropdown menu, 
+                                validate them with a click, and make corrections if necessary. 
+                            </p>
+                            <p>This project highlights my skills in HTML, CSS, and JavaScript, and you can see the 
+                                Github docs <a src="https://github.com/Theografiska/credit-card-validator" target="_blank">here</a>.
+                            </p>
+                        </div>
+                        <div id="disclaimer" class="paragraph">
+                            <h3>Disclaimer</h3>
+                            <p>These credit card numbers DO NOT work! 
+                                They are for testing purposes only. 
+                                Without a valid owner name, an expiration date and a valid CVV code, they can't be used for real transactions. 
+                            </p>
+                            <p>You should use these numbers only to test your validation strategies and for bogus data. 
+                                Note that the Luhn algorithm used here is freely available across the web even Wikipedia.org. 
+                                These numbers were generated randomly. 
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-
 
         <footer>
             <p>© Theodor Kaljo, 2024. Made in Tallinn.</p>

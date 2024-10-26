@@ -28,7 +28,7 @@ You can view the live site here: [Credit Card Validator](https://theografiska.gi
 ![Screenshot 2](resources/screenshot2.png)
 *Generation of a card*
 
-![Screenshot 3](resources/screenshot2.png)
+![Screenshot 3](resources/screenshot3.png)
 *Validation of a card, generating a new corrected card, and re-validating it*
 
 ### How to Run the Project Locally

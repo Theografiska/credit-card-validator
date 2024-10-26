@@ -14,7 +14,7 @@ You can view the live site here: [Credit Card Validator](https://theografiska.gi
 
 ### Main Functionality Built
 
-1. **Card Generation**: Users can select a credit card company from a dropdown menu and press a button to generate a new card number, which is then displayed on a visually appealing design card.
+1. **Card Generation**: Users can select a credit card company from a dropdown menu and press a button to generate a new card number, which is then displayed on a visually appealing credit card (fully generated with HTML/CSS).
   
 2. **Card Validation**: Users can click a button to validate the generated card number, receiving instant feedback on its validity.
 

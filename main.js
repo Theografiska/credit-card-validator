@@ -444,7 +444,7 @@ function generateNewCard() {
     // creating the message:
     let newCardMessage = document.createElement('p');
     let cardNumber = randomCard.join('');
-    let phrase = `         <span class="companyFont">${cardCo}</span><br><br><img class="chipImg" src="resources/chip.png"><img class="contactlessImg" src="resources/contactless.png"><br><br><span class="numberFont">${cardNumber}</span><br><span class="cardHolder">John Doe    |    12/27</span>`;
+    let phrase = `         <span class="companyFont">${cardCo}</span><br><img class="chipImg" src="resources/chip.png"><img class="contactlessImg" src="resources/contactless.png"><br><span class="numberFont">${cardNumber}</span><br><span class="cardHolder">John Doe    |    12/27</span>`;
     newCardMessage.innerHTML = phrase;
     newCardMessage.id = 'cardMessage';
 
@@ -491,7 +491,7 @@ function generateNewCard() {
                 let correctedCard = turnInvalidCardValid(randomCard);
                 let fixedCard = document.createElement('p');
                 let cardNumber = correctedCard.join('');
-                let newMessage = `         <span class="companyFont">${cardCo}</span><br><br><img class="chipImg" src="resources/chip.png"><img class="contactlessImg" src="resources/contactless.png"><br><br><span class="numberFont">${cardNumber}</span><br><span class="cardHolder">John Doe    |    12/27</span>`;
+                let newMessage = `         <span class="companyFont">${cardCo}</span><br><img class="chipImg" src="resources/chip.png"><img class="contactlessImg" src="resources/contactless.png"><br><span class="numberFont">${cardNumber}</span><br><span class="cardHolder">John Doe    |    12/27</span>`;
                 fixedCard.innerHTML = newMessage;
                 fixedCard.id = 'turnValidMessage';
                 fixedCard.style.marginTop = '2rem';

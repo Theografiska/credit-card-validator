@@ -15,9 +15,18 @@ body {
 
 h1 {
     font-family: "Roboto";
-    font-size: 2.5rem;
+    font-size: 2rem;
     color:#03247e;
     margin-bottom: 3rem;
+}
+
+@media only screen and (max-width: 760px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+    header h2 {
+        font-size: 1rem;
+    }
 }
 
 h2 {
@@ -82,7 +91,7 @@ header nav ul {
     display: flex;
     list-style: none;
     padding-right: 1.5rem;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 500;
     align-items: center;
 }
@@ -109,9 +118,16 @@ main {
     margin-bottom: 6rem;
     background-color: aliceblue;
     padding: 4rem 4rem;
-    width: 60%;
-    min-width: 550px;
+    width: 75%;
     min-height: 60rem;
+}
+
+@media only screen and (max-width: 760px) {
+    #hero-section {
+        margin-top: 2rem;
+        width: 90%;
+        padding: 2rem .25rem;
+    }
 }
 
 .banner h3 {
@@ -149,8 +165,17 @@ button:hover {
     background-color: darkblue;
 }
 
-#cardButton {  /* main button to generate a card */
+/* main button to generate a card */
+/*
+#cardButton {  
     max-width: 30%;
+}*/
+
+@media only screen and (max-width: 560px) {
+    button {
+        font-size: .8rem;
+        width: 150px;
+    }
 }
 
 /* Card designs */
@@ -168,6 +193,8 @@ button:hover {
 }
 
 .chipImg {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     height: 30px;
     width: auto;
 }
@@ -175,16 +202,16 @@ button:hover {
 .contactlessImg {
     height: 30px;
     width: auto;
+    margin-bottom: 1rem;
 }
 
 .companyFont {
     font-family: 'Montserrat';
+    font-size: 1rem;
 }
 
 .numberFont {
     font-size: 1.5rem;
-    margin-top: 1.75rem;
-    margin-bottom: 1.75rem;
 }
 
 .cardHolder {
@@ -201,6 +228,42 @@ button:hover {
     height: 200px;
     border-radius: 10px;
     text-align: left;
+}
+
+@media only screen and (max-width: 560px) {
+    #cardMessage {
+        width: 240px;
+        height: 150px;
+        padding: 1.2rem 1.6rem;
+    }
+    .chipImg {
+        height: 20px;
+        width: auto;
+    }
+    
+    .contactlessImg {
+        height: 20px;
+        width: auto;
+    }
+    
+    .companyFont {
+        font-size: .7rem;
+    }
+    
+    .numberFont {
+        font-size: 1rem;
+        margin-top: .75rem;
+        margin-bottom: 1.75rem;
+    }
+    
+    .cardHolder {
+        font-size: .6rem;
+    }
+    #turnValidMessage { /* corrected card, step 3 */
+        width: 240px;
+        height: 150px;
+        padding: 1.2rem 1.6rem;
+    }
 }
 
 /* Step 2 messages */
@@ -225,7 +288,7 @@ button:hover {
 /* form section */
 
 form {
-    padding: 1rem;
+    padding-bottom: 1rem;
     color: black;
 }
 

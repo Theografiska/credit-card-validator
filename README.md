@@ -2,7 +2,7 @@
 
 ## Summary of the Project
 
-This project provides a simple web application to validate credit card numbers using the Luhn algorithm. It allows users to input their credit card details and quickly checks if the entered card number is valid. 
+This project provides a simple web application to validate credit card numbers using the Luhn algorithm. Users can generate card numbers based on selected credit card companies, validate them, and make corrections if necessary.
 
 You can view the live site here: [Credit Card Validator](https://theografiska.github.io/credit-card-validator/).
 
@@ -14,11 +14,13 @@ You can view the live site here: [Credit Card Validator](https://theografiska.gi
 
 ### Main Functionality Built
 
-- Input validation using the Luhn algorithm to determine the validity of credit card numbers.
-- User-friendly interface with clear error messages for invalid inputs.
-- Responsive design for optimal viewing on various devices.
-- Random credit card number generation for testing purposes.
-- Display of the credit card issuer based on the number's initial digits.
+1. **Card Generation**: Users can select a credit card company from a dropdown menu and press a button to generate a new card number, which is then displayed on a visually appealing design card.
+  
+2. **Card Validation**: Users can click a button to validate the generated card number, receiving instant feedback on its validity.
+
+3. **Correction of Invalid Cards**: If the card number is invalid, users have the option to correct the number by clicking a button.
+
+4. **Re-validation**: After making corrections, users can re-validate the card number.
 
 ### Screenshots of the Website
 

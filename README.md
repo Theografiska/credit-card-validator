@@ -1,4 +1,4 @@
-# credit-card-validator
+# Credit Card Validator
 
 ## Summary of the Project
 
@@ -22,17 +22,20 @@ You can view the live site here: [Credit Card Validator](https://theografiska.gi
 
 ### Screenshots of the Website
 
-![Screenshot 1](path/to/screenshot1.png)
-*Caption for Screenshot 1*
+![Screenshot 1](resources/screenshot1.png)
+*Initial view*
 
-![Screenshot 2](path/to/screenshot2.png)
-*Caption for Screenshot 2*
+![Screenshot 2](resources/screenshot2.png)
+*Generation of a card*
+
+![Screenshot 3](resources/screenshot2.png)
+*Validation of a card, generating a new corrected card, and re-validating it*
 
 ### How to Run the Project Locally
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/credit-card-validator.git
+   git clone https://github.com/theografiska/credit-card-validator.git
 
 2. Open `index.html` in your web browser.
 

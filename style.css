@@ -6,9 +6,6 @@
     padding: 0;
 }
 
-.hidden {
-    display: none;
-}
 
 body {
     overflow: scroll;
@@ -18,16 +15,15 @@ body {
 
 h1 {
     font-family: "Roboto";
-    font-size: 3rem;
+    font-size: 2.5rem;
     color:#03247e;
-    margin-bottom: 1rem;
+    margin-bottom: 3rem;
 }
 
 h2 {
     font-family: "Roboto";
-    font-size: 2.5rem;
+    font-size: 1.75rem;
     font-weight: 500;
-    padding-top: 4rem;
     margin-bottom: 4rem;
     position: relative;
     text-align: center;
@@ -35,7 +31,7 @@ h2 {
 
 h3 {
     font-family: "Roboto";
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 500;
     margin-bottom: 1.5rem;
     text-align: center;
@@ -51,7 +47,7 @@ h4 {
 
 p {
     font-size: 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     font-family: 'Montserrat';
 }
 
@@ -59,21 +55,6 @@ a {
     text-decoration: none;
     cursor: pointer;
     color: white;
-}
-
-button {
-    background-color: blue;
-    color: white;
-    font-family: "Roboto Mono";
-    font-size: 1rem;
-    padding: 6px 10px;
-    border-radius: 0.25rem;
-    cursor: pointer;
-}
-
-button:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: darkblue;
 }
 
 /* header settings */
@@ -92,7 +73,7 @@ header {
     z-index: 100;
 }
 
-header h3 { /* The "logo" element */
+header h2 { /* The "logo" element */
     padding-left: 1.5rem;
     margin-bottom: 0;
 }
@@ -110,10 +91,6 @@ nav ul li {
     padding-left: 2.5rem;
 }
 
-header button {
-    margin-left: 2.5rem;
-}
-
 /* banner or hero section */
 
 main {
@@ -129,112 +106,138 @@ main {
 
 #hero-section {
     margin-top: 6rem;
-    margin-bottom: 16rem;
+    margin-bottom: 6rem;
     background-color: aliceblue;
     padding: 4rem 4rem;
     width: 60%;
+    min-width: 550px;
     min-height: 60rem;
 }
 
-
 .banner h3 {
-    margin-top: 4rem;
+    margin-top: 2rem;
 }
 
-span {
-    color: darkblue;
-    padding: .25rem;
-    font-size: 1rem;
-    font-weight: 500;
-    background-color: white;
-    font-family: 'Roboto Mono', monospace;
+/* Section below Step 1 heading */
+#generate-new-card-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
 }
+
+/* Section below Step 3 heading */
+#turn-valid-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+}
+
+/* buttons */
+button {
+    background-color: black;
+    color: white;
+    font-family: "Roboto Mono";
+    font-size: .9rem;
+    padding: 3px 3px;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    margin-bottom: 2rem;
+}
+
+button:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: darkblue;
+}
+
+#cardButton {  /* main button to generate a card */
+    max-width: 30%;
+}
+
+/* Card designs */
+
+#cardMessage { /* initial card, step 1 */
+    background: linear-gradient(145deg, #001242, #0a2a73);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(0, 0, 0, 0.3);
+    color: white;
+    font-family: 'Roboto Mono', "monospace";
+    padding: 1.5rem 2rem;
+    width: 320px;
+    height: 200px;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.chipImg {
+    height: 30px;
+    width: auto;
+}
+
+.contactlessImg {
+    height: 30px;
+    width: auto;
+}
+
+.companyFont {
+    font-family: 'Montserrat';
+}
+
+.numberFont {
+    font-size: 1.5rem;
+    margin-top: 1.75rem;
+    margin-bottom: 1.75rem;
+}
+
+.cardHolder {
+    font-size: .8rem;
+}
+
+#turnValidMessage { /* corrected card, step 3 */
+    background: linear-gradient(145deg, #001242, #0a2a73);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(0, 0, 0, 0.3);
+    color: white;
+    font-family: 'Roboto Mono', "monospace";
+    padding: 1.5rem 2rem;
+    width: 320px;
+    height: 200px;
+    border-radius: 10px;
+    text-align: left;
+}
+
+/* Step 2 messages */
+
+#invalidMessage {
+    color: red;
+    font-weight: bold;
+}
+
+#validMessage {
+    color: green;
+    font-weight: bold;
+}
+
+/* step 4 message */
+#validateAgainMessage span {
+    color: green;
+    font-weight: bold;
+}
+
 
 /* form section */
 
 form {
-    gap: 15px;
-    width: 500px;
-    display: inline-block;
-    /* Form outline */
-    padding: 2rem;
-    border: 1px solid #ccc;
-    border-radius: 1rem;
-    /*background-color: #ffb765;*/
-    background-color: #d3d3d3;
+    padding: 1rem;
     color: black;
 }
 
-form p + p {
-    margin-top: 1rem;
-}
-
-form h4 {
-    text-align: left;
-    font-size: 1.25rem;
-    font-family: "Montserrat";
-}
-
-form p {
-    max-width: 100%;
-    margin-bottom: 0;
-    display: flex;
-    align-items: center; /* Center align labels and inputs */
-}
-
 label {
-    /* Uniform size & alignment */
     display: inline-block;
-    min-width: 120px;
-    text-align: right;
     margin-right: 10px;
+    font-size: 1rem;
+    text-align: left;
+}
+
+select {
     font-size: .9rem;
-}
-
-input,
-textarea {
-  /* To make sure that all text fields have the same font settings*/
-    font: .8rem "Roboto Mono";
-    width: 100%;
-    max-width: 400px; /* Responsive width control */
-    padding: 6px;
-    border: 1px solid #999;
-    border-radius: 4px; 
-}
-
-.form-section textarea {
-    height: 6rem;
-}
-
-input:focus,
-textarea:focus {
-  /* Additional highlight for focused elements */
-  border-color: #000;
-  outline: none;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Add shadow on focus */
-  transition: border-color 0.2s ease; /* Smooth transition on focus */
-}
-
-textarea {
-    /* Align multiline text fields with their labels */
-    vertical-align: top;
-  }
-
-#submit-button {
-    padding: 4px 8px;
-    background-color: #cd7739;
-    border-radius: 0.25rem;
-    font-size: .9rem;
-    font-family: "Roboto Mono";
-    cursor: pointer;
-    margin-left: 130px;
-    transition: background-color 0.3s ease; /* Smooth hover effect */
-    width: 40%;
-}
-
-#submit-button:hover {
-    background-color: #8f5135; /* Darker purple on hover */
-    color: white;
 }
 
 /* footer */

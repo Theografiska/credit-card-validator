@@ -15,7 +15,7 @@
         <!-- Header section -->
         <header>
             <div id="logo">
-                <h3><a href="#">Credit Card Validator<br></a></h3> 
+                <h2><a href="#">Credit Card Validator<br></a></h2> 
             </div>
             <nav>
                 <ul>
@@ -29,35 +29,39 @@
             <div class="banner">
                 <div id="hero-section">
                     <h1>Validate a Card Number</h1>
+                    <h3 id="generate-card-heading" class="step1">Step 1. Generate a new credit card number.</h3>
                     <div id="generate-new-card-section" class="step1">
-                        <h3 id="generate-card-heading" class="step1">Step 1. Generate a new credit card number.</h3>
-                        <button id="cardButton" class="step1">Generate a card number</button>
+                        <form>
+                            <p>
+                                <label for="card-number">Choose an issuer:</label>
+                                <select id="cardCompany" name="cardCompany" required>
+                                    <option value="amex">American Express</option>
+                                    <option value="dcCb">Diners Club – Carte Blanche</option>
+                                    <option value="dcNa">Diners Club – USA & Canada</option>
+                                    <option value="dcInt">Diners Club – International</option>
+                                    <option value="discover">Discover</option>
+                                    <option value="instaPayment">InstaPayment</option>
+                                    <option value="jcb">JCB</option>
+                                    <option value="maestro">Maestro</option>
+                                    <option value="masterCard">MasterCard</option>
+                                    <option value="visa">Visa</option>
+                                    <option value="visaEl">Visa Electron</option>
+                                </select>
+                                <!--<input type="submit" value="Send"> --> <!--commenting out for now-->
+                        </form>
+                        <button id="cardButton" class="step1">Generate card</button>
                     </div>
-                    
+                    <h3 id="validate-card-heading" class="step2"></h3>
                     <div id="validate-card-section" class="step2">
-                        <h3 id="validate-card-heading" class="step2"></h3>
                     </div>
-                    
+                    <h3 id="turn-valid-heading" class="step3"></h3>
                     <div id="turn-valid-section" class="step3">  
-                        <h3 id="turn-valid-heading" class="step3"></h3>
                     </div>
         
                     <div id="validate-again-section" class="step4">  
                         <h3 id="validate-again-heading" class="step4"></h3>
                     </div>
-                    
-                    <!--
-                    <form>
-                        <h4>Step 2: Validate the card number here.</h4>
-                        <p>
-                            <label for="card-number">Card Number: </label>
-                            <input type="text" id="card-number" name="card-number" placeholder="Enter the credit card digits" required>
-                        </p>
-                        <p>
-                            <input type="submit" value="Test card" id="submit-button">
-                        </p>
-                    </form>
-                    -->
+                   
                 </div>
             </div>
 

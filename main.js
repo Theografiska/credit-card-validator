@@ -1,8 +1,8 @@
 
 // function to validate a credit card:
 const validateCred = cardArray => {
-    let arrayCopy = cardArray.slice().reverse(); // making a copy; reversing the array to access from the left side 
-    let sumCheck = 0; // this is needed to check whether the sum modulo 10 is 0
+    let arrayCopy = cardArray.slice().reverse(); // working on a copy; accessing from the left side 
+    let sumCheck = 0; // to check whether the sum modulo 10 is 0
 
     for (let i = 0; i < arrayCopy.length; i++) {
         let digit = arrayCopy[i];
@@ -15,17 +15,15 @@ const validateCred = cardArray => {
         sumCheck += digit;
     }
 
-    return sumCheck % 10 === 0;
+    return sumCheck % 10 === 0; // if % 10 === 0 returns true, else false
 }
 
-
-// function to identify the card company for a single card:
-
+// function to identify the card issuer company of a card:
+/*
 function getCardCompany(cardArray) {
-    // Convert the array of digits into a string
-    const cleanedNumber = cardArray.join('');
+    const cleanedNumber = cardArray.join('');  // converting array of digits into a string
 
-    // Define the card issuers with their respective IIN ranges and lengths
+    // defining the card issuers with their respective IIN ranges and lengths
     const cardIssuers = [
         { name: "American Express", prefixes: ["34", "37"], lengths: [15] },
         { name: "Diners Club - Carte Blanche", prefixes: ["300", "301", "302", "303", "304", "305"], lengths: [14] },
@@ -40,7 +38,7 @@ function getCardCompany(cardArray) {
         { name: "Visa Electron", prefixes: ["4026", "417500", "4508", "4844", "4913", "4917"], lengths: [16] }
     ];
 
-    // Check each card issuer
+    // checking each card issuer
     for (const issuer of cardIssuers) {
         const matchesPrefix = issuer.prefixes.some(prefix => cleanedNumber.startsWith(prefix));
         const matchesLength = issuer.lengths.includes(cleanedNumber.length);
@@ -52,7 +50,7 @@ function getCardCompany(cardArray) {
 
     return "Unknown credit card issuer";
 }
-
+*/
 
 /*
 const getCardCompany = card => {
@@ -131,7 +129,7 @@ const arrayFromString = string => {
     return numberArr;
 }
 
-// function to turn invalid card to valid. By adding a number, which makes the sumCheck % 10 = 0. 
+// function to turn invalid card to valid (adding a number, which makes the sumCheck % 10 = 0). 
 
 const turnInvalidCardValid = cardArr => {
     if (validateCred(cardArr) === false) {
@@ -161,7 +159,7 @@ const turnInvalidCardValid = cardArr => {
             return arrayCopy;
         }
     } else { // if a card is valid, it won't be changed
-        if (validateCred(cardArr) === true) { // but still checked again if it's valid
+        if (validateCred(cardArr) === true) { // just in case making sure it's valid
             return cardArr;
         }
     }
@@ -264,6 +262,16 @@ function generateVisaElCard() {
     return randomCard;
 }
 
+// Visa: 
+function generateVisaCard() {
+    let randomCard = [4];
+    for (let i =1; i < Math.floor(Math.random() * 7) + 13; i++) {
+        randomCard.push(Math.floor(Math.random() * 10));
+    }
+    randomCard = generateRandomness(randomCard);
+    return randomCard;
+}
+
 // InstaPayment: begins with 637, 638, 639; length: 16
 function generateInstaPayCard() {
     let randomCard = [];
@@ -347,12 +355,10 @@ function createNewButton(id, text, bgColor, textColor) {
 }
 
 let generateCardButton = document.getElementById('cardButton');
-generateCardButton.style.marginBottom = '2rem';
 
-let validateCardButton = createNewButton('validateButton', 'Validate the card', 'blue', 'white');
-let turnValidButton = createNewButton('turnValidButton', 'Turn the card valid', 'blue', 'white');
-let validateAgainButton = createNewButton('validateAgainButton', 'Validate again', 'blue', 'white');
-
+let validateCardButton = createNewButton('validateButton', 'Validate the card', 'black', 'white');
+let turnValidButton = createNewButton('turnValidButton', 'Turn the card valid', 'black', 'white');
+let validateAgainButton = createNewButton('validateAgainButton', 'Validate again', 'black', 'white');
 
 // function to remove elements:
 function removeElementById(id) {
@@ -360,6 +366,13 @@ function removeElementById(id) {
     if (element) {
         element.remove();
     }
+}
+
+// function to capture selected issuer: 
+
+function captureSelectedIssuer () {
+    let selectedIssuer = document.getElementById('cardCompany').value;
+    return selectedIssuer;
 }
 
 function generateNewCard() {
@@ -376,24 +389,62 @@ function generateNewCard() {
 
     // generating a card number:
     const arraysOfCards = [
-        generateJcbCard(),
-        generateDcNaCard(),
-        generateDcCbCard(),
-        generateDcIntCard(),
         generateAmexCard(),
-        generateMaestroCard(),
-        generateVisaElCard(),
+        generateDcCbCard(),
+        generateDcNaCard(),
+        generateDcIntCard(),
+        generateDiscoverCard(),
         generateInstaPayCard(),
+        generateJcbCard(),
+        generateMaestroCard(),
         generateMasterCard(),
-        generateDiscoverCard()
+        generateVisaCard(),
+        generateVisaElCard(),
     ]
-    let randomCard = arraysOfCards[Math.floor(Math.random() * arraysOfCards.length)]; // to generate a card
-    let cardCo = getCardCompany(randomCard); // shows which company issued the card
+
+    let chosenIssuer = captureSelectedIssuer();
+    let randomCard; 
+    let cardCo;
+
+    if (chosenIssuer === 'amex') {
+        randomCard = arraysOfCards[0];
+        cardCo = 'American Express';
+    } else if (chosenIssuer === 'dcCb') {
+        randomCard = arraysOfCards[1];
+        cardCo = 'Diners Club – Carte Blanche';
+    } else if (chosenIssuer === 'dcNa') {
+        randomCard = arraysOfCards[2];
+        cardCo = 'Diners Club – North America';
+    } else if (chosenIssuer === 'dcInt') {
+        randomCard = arraysOfCards[3];
+        cardCo = 'Diners Club – International';
+    } else if (chosenIssuer === 'discover') {
+        randomCard = arraysOfCards[4];
+        cardCo = 'Discover';
+    } else if (chosenIssuer === 'instaPayment') {
+        randomCard = arraysOfCards[5];
+        cardCo = 'InstaPayment';
+    } else if (chosenIssuer === 'jcb') {
+        randomCard = arraysOfCards[6];
+        cardCo = 'JCB';
+    } else if (chosenIssuer === 'maestro') {
+        randomCard = arraysOfCards[7];
+        cardCo = 'Maestro';
+    } else if (chosenIssuer === 'masterCard') {
+        randomCard = arraysOfCards[8];
+        cardCo = 'MasterCard';
+    } else if (chosenIssuer === 'visa') {
+        randomCard = arraysOfCards[9];
+        cardCo = 'Visa';
+    } else if (chosenIssuer === 'visaEl') {
+        randomCard = arraysOfCards[10];
+        cardCo = 'Visa Electron';
+    } 
 
     // creating the message:
     let newCardMessage = document.createElement('p');
     let cardNumber = randomCard.join('');
-    let phrase = `The card number is:<br><br><span>${cardNumber} | ${cardCo}</span>`;
+    let phrase = `         <span class="companyFont">${cardCo}</span><br><br><img class="chipImg" src="resources/chip.png"><img class="contactlessImg" src="resources/contactless.png"><br><br><span class="numberFont">${cardNumber}</span><br><span class="cardHolder">John Doe    |    12/27</span>`;
     newCardMessage.innerHTML = phrase;
     newCardMessage.id = 'cardMessage';
 
@@ -401,9 +452,7 @@ function generateNewCard() {
     document.getElementById('generate-new-card-section').appendChild(newCardMessage); 
 
     // changing the red button in step 1 to blue:
-    generateCardButton.innerHTML = 'Generate again'; 
-    generateCardButton.style.backgroundColor = 'blue';
-    generateCardButton.style.color = 'white';
+    generateCardButton.innerHTML = 'Generate card'; 
 
     // second section gets added automatically:
     document.getElementById('validate-card-heading').innerHTML = 'Step 2. Validate the card number.'; // Step 2: validate card heading
@@ -419,22 +468,19 @@ function generateNewCard() {
         let validatingMessage = document.createElement('p');
         validatingMessage.id = 'validatingMessage';
         validatingMessage.style.marginTop = '2rem';
-        validatingMessage.style.fontWeight = 'bold';
 
         removeElementById('validateButton'); // TESTING
 
         if (validateCred(randomCard) === true) {
-            validatingMessage.innerHTML = 'This card number is valid.';
-            validatingMessage.style.color = 'green';
+            validatingMessage.innerHTML = 'This card number is <span id="validMessage">valid</span>.';
             document.getElementById('turn-valid-heading').innerHTML = ''; // TESTING
             removeElementById('turnValidButton'); // TESTING
             document.getElementById('validate-again-heading').innerHTML = ''; // TESTING
         } else if (validateCred(randomCard) === false) {
-            validatingMessage.innerHTML = 'This card number is invalid.';
-            validatingMessage.style.color = 'red';
+            validatingMessage.innerHTML = 'This card number is <span id="invalidMessage">invalid</span>.';
 
             // step 3 section gets added in case it's a faulty card:
-            document.getElementById('turn-valid-heading').innerHTML = '(Optional: Step 3.) Turn an invalid card valid.';
+            document.getElementById('turn-valid-heading').innerHTML = 'Step 3. Turn an invalid card valid.';
             document.getElementById('turn-valid-section').appendChild(turnValidButton);
 
             // generating a new valid number:
@@ -445,7 +491,7 @@ function generateNewCard() {
                 let correctedCard = turnInvalidCardValid(randomCard);
                 let fixedCard = document.createElement('p');
                 let cardNumber = correctedCard.join('');
-                let newMessage = `The corrected card number is:<br><br><span>${cardNumber} | ${cardCo}</span>`;
+                let newMessage = `         <span class="companyFont">${cardCo}</span><br><br><img class="chipImg" src="resources/chip.png"><img class="contactlessImg" src="resources/contactless.png"><br><br><span class="numberFont">${cardNumber}</span><br><span class="cardHolder">John Doe    |    12/27</span>`;
                 fixedCard.innerHTML = newMessage;
                 fixedCard.id = 'turnValidMessage';
                 fixedCard.style.marginTop = '2rem';
@@ -453,7 +499,7 @@ function generateNewCard() {
 
                 removeElementById('turnValidButton'); // TESTING
 
-                document.getElementById('validate-again-heading').innerHTML = '(Optional: Step 4.) Validate the card again.';
+                document.getElementById('validate-again-heading').innerHTML = 'Step 4. Validate the card again.';
                 document.getElementById('validate-again-section').appendChild(validateAgainButton);
 
                 function validateAgain() {
@@ -462,13 +508,12 @@ function generateNewCard() {
                     let validateAgainMessage = document.createElement('p');
                     validateAgainMessage.id = 'validateAgainMessage';
                     validateAgainMessage.style.marginTop = '2rem';
-                    validateAgainMessage.style.fontWeight = 'bold';
 
                     removeElementById('validateAgainButton');
 
                     if (validateCred(correctedCard) === true) {
-                        validateAgainMessage.innerHTML = 'The card number is now definitely valid.';
-                        validateAgainMessage.style.color = 'green';
+                        validateAgainMessage.innerHTML = `Confirmed: the new card number is <span>valid</span>.`;
+                       // validateAgainMessage.style.color = 'green';
                     } else {
                         validateAgainMessage.innerHTML = 'This did not work as expected. The new card is also invalid.';
                         validateAgainMessage.style.color = 'red';

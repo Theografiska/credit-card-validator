@@ -241,7 +241,7 @@ button:hover {
 
 .chipImg {
     margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     height: 30px;
     width: auto;
 }
@@ -249,7 +249,7 @@ button:hover {
 .contactlessImg {
     height: 30px;
     width: auto;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
 .companyFont {
@@ -258,7 +258,7 @@ button:hover {
 }
 
 .numberFont {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
 }
 
 .cardHolder {
@@ -291,11 +291,13 @@ button:hover {
     .chipImg {
         height: 20px;
         width: auto;
+        margin-bottom: 1rem;
     }
     
     .contactlessImg {
         height: 20px;
         width: auto;
+        margin-bottom: 1rem;
     }
     
     .companyFont {
@@ -303,13 +305,13 @@ button:hover {
     }
     
     .numberFont {
-        font-size: 1rem;
+        font-size: .8rem;
         margin-top: .75rem;
         margin-bottom: 1.75rem;
     }
     
     .cardHolder {
-        font-size: .6rem;
+        font-size: .7rem;
     }
     #turnValidMessage { /* corrected card, step 3 */
         width: 240px;

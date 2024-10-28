@@ -18,106 +18,6 @@ const validateCred = cardArray => {
     return sumCheck % 10 === 0; // if % 10 === 0 returns true, else false
 }
 
-// function to identify the card issuer company of a card:
-/*
-function getCardCompany(cardArray) {
-    const cleanedNumber = cardArray.join('');  // converting array of digits into a string
-
-    // defining the card issuers with their respective IIN ranges and lengths
-    const cardIssuers = [
-        { name: "American Express", prefixes: ["34", "37"], lengths: [15] },
-        { name: "Diners Club - Carte Blanche", prefixes: ["300", "301", "302", "303", "304", "305"], lengths: [14] },
-        { name: "Diners Club - International", prefixes: ["36"], lengths: [14] },
-        { name: "Diners Club - USA & Canada", prefixes: ["54"], lengths: [16] },
-        { name: "Discover", prefixes: ["6011", "622126", "622925", "644", "645", "646", "647", "648", "649", "65"], lengths: [16, 17, 18, 19] },
-        { name: "InstaPayment", prefixes: ["637", "638", "639"], lengths: [16] },
-        { name: "JCB", prefixes: ["3528", "3529", "353", "354", "355", "356", "357", "358"], lengths: [16, 17, 18, 19] },
-        { name: "Maestro", prefixes: ["5018", "5020", "5038", "5893", "6304", "6759", "6761", "6762", "6763"], lengths: [16, 17, 18, 19] },
-        { name: "MasterCard", prefixes: ["51", "52", "53", "54", "55", "222100", "222101", "222102", "222103", "222104", "222105", "222106", "222107", "222108", "222109", "222110", "272099"], lengths: [16] },
-        { name: "Visa", prefixes: ["4"], lengths: [13, 16, 19] },
-        { name: "Visa Electron", prefixes: ["4026", "417500", "4508", "4844", "4913", "4917"], lengths: [16] }
-    ];
-
-    // checking each card issuer
-    for (const issuer of cardIssuers) {
-        const matchesPrefix = issuer.prefixes.some(prefix => cleanedNumber.startsWith(prefix));
-        const matchesLength = issuer.lengths.includes(cleanedNumber.length);
-
-        if (matchesPrefix && matchesLength) {
-            return `${issuer.name}`;
-        }
-    }
-
-    return "Unknown credit card issuer";
-}
-*/
-
-/*
-const getCardCompany = card => {
-    if ((card[0] === 3 && card[1] === 4) || (card[0] === 3 && card[1] === 7)) { // Amex begins with 34 or 37
-        return'American Express';
-    } else if (card[0] === 3 && card[1] === 5 ){  // JCB range is actually 3528–3589
-        return 'JCB';
-    } else if ((card[0] === 5 && card[1] === 0 && card[2] === 1 && card[3] === 8) || // Maestro begins with 5018, 5020, 5038, 5893, 6304, 6759, 6761, 6762, 6763
-    (card[0] === 5 && card[1] === 0 && card[2] === 2 && card[3] === 0) || 
-    (card[0] === 5 && card[1] === 0 && card[2] === 3 && card[3] === 8) || 
-    (card[0] === 5 && card[1] === 8 && card[2] === 9 && card[3] === 3) || 
-    (card[0] === 6 && card[1] === 3 && card[2] === 0 && card[3] === 4) || 
-    (card[0] === 6 && card[1] === 7 && card[2] === 5 && card[3] === 9) || 
-    (card[0] === 6 && card[1] === 7 && card[2] === 6 && card[3] === 1) || 
-    (card[0] === 6 && card[1] === 7 && card[2] === 6 && card[3] === 2) || 
-    (card[0] === 6 && card[1] === 7 && card[2] === 6 && card[3] === 3)){
-    return 'Maestro';
-    } else if ((card[0] === 3 && card[1] === 0 && card[2] === 0) || // Diners Club – Carte Blanche begins with 300, 301, 302, 303, 304, 305
-               (card[0] === 3 && card[1] === 0 && card[2] === 1) || 
-               (card[0] === 3 && card[1] === 0 && card[2] === 2) || 
-               (card[0] === 3 && card[1] === 0 && card[2] === 3) || 
-               (card[0] === 3 && card[1] === 0 && card[2] === 4) || 
-               (card[0] === 3 && card[1] === 0 && card[2] === 5)) { 
-        return 'Diners Club – Carte Blanche';
-    } else if (card[0] === 3 && card[1] === 6) { // Diners Club – International begins with 36
-        return 'Diners Club – International';
-    } else if (card[0] === 5 && card[1] === 4) { // Diners Club – USA & Canada begins with 54 (length 16)
-        return 'Diners Club – USA & Canada';
-    } else if ((card[0] === 4 && card[1] === 0 && card[2] === 3 && card[3] === 6) || // Visa Electron begins with 4026, 417500, 4508, 4844, 4913, 4917
-               (card[0] === 4 && card[1] === 1 && card[2] === 7 && card[4] === 5 && card[5] === 0 && card[6] === 0) || 
-               (card[0] === 4 && card[1] === 5 && card[2] === 0 && card[3] === 8) || 
-               (card[0] === 4 && card[1] === 8 && card[2] === 4 && card[3] === 4) || 
-               (card[0] === 4 && card[1] === 9 && card[2] === 1 && card[3] === 3) || 
-               (card[0] === 4 && card[1] === 9 && card[2] === 1 && card[3] === 7)){ 
-        return 'Visa Electron';
-    } else if (card[0] === 4) { // Visa begins with 4
-        return 'Visa';
-    } else if ((card[0] === 5 && card[1] === 1) || // Mastercard begins with 51, 52, 53, 54, 55, 222100-272099
-               (card[0] === 5 && card[1] === 2) ||
-               (card[0] === 5 && card[1] === 3) ||
-               (card[0] === 5 && card[1] === 4) ||
-               (card[0] === 5 && card[1] === 5) ||
-               (card[0] === 2 && card[1] === 2) || // actually it's a range from 222100-272099
-               (card[0] === 2 && card[1] === 3) ||
-               (card[0] === 2 && card[1] === 4) ||
-               (card[0] === 2 && card[1] === 5) ||
-               (card[0] === 2 && card[1] === 6) ||
-               (card[0] === 2 && card[1] === 7)){
-        return 'Mastercard';
-    }  else if ((card[0] === 6 && card[1] === 0 && card[2] === 1 && card[3] === 1) || // Discover begins with 6011, 622126-622925, 644, 645, 647, 648, 649, 65
-               (card[0] === 6 && card[1] === 4 && card[2] === 4) || // actually it's a range: 622126-622925
-               (card[0] === 6 && card[1] === 4 && card[2] === 5) ||
-               (card[0] === 6 && card[1] === 4 && card[2] === 7) ||
-               (card[0] === 6 && card[1] === 4 && card[2] === 8) ||
-               (card[0] === 6 && card[1] === 4 && card[2] === 9) ||
-               (card[0] === 6 && card[1] === 5)){
-        return 'Discover';
-    }  else if ((card[0] === 6 && card[1] === 3 && card[2] === 7) || // InstaPayment begins with 637, 638, 639
-                (card[0] === 6 && card[1] === 3 && card[2] === 8) || 
-                (card[0] === 6 && card[1] === 3 && card[2] === 9)){
-        return 'InstaPayment';
-    } else {
-            return 'Unknown company';
-    }
-}
-*/
-
 // function to create an array from a string of number:
 
 const arrayFromString = string => {
@@ -300,7 +200,6 @@ function generateAmexCard() {
     return randomCard;
 }
 
-
 // MasterCard: begins with 51-55, 222100-272099; length 16
 function generateMasterCard() {
     let card = [5]; // Initialize the card with the first digit
@@ -371,9 +270,24 @@ function removeElementById(id) {
 // function to capture selected issuer: 
 
 function captureSelectedIssuer () {
-    let selectedIssuer = document.getElementById('cardCompany').value;
-    return selectedIssuer;
+    return document.getElementById('cardCompany').value;
 }
+
+// Card company data object for mapping
+
+const issuerData = {
+    amex: { cardArrayIndex: 0, companyName: 'American Express', bgImage: "url('resources/amex-background.png')" },
+    dcCb: { cardArrayIndex: 1, companyName: 'Diners Club – Carte Blanche', bgImage: "url('resources/dc-cb-background.png')" },
+    dcNa: { cardArrayIndex: 2, companyName: 'Diners Club – North America', bgImage: "url('resources/dc-cb-background.png')" },
+    dcInt: { cardArrayIndex: 3, companyName: 'Diners Club – International', bgImage: "url('resources/dc-cb-background.png')" },
+    discover: { cardArrayIndex: 4, companyName: 'Discover', bgImage: "url('resources/discover-background.png')" },
+    instaPayment: { cardArrayIndex: 5, companyName: 'InstaPayment', bgImage: "url('resources/insta-payment-background.png')" },
+    jcb: { cardArrayIndex: 6, companyName: 'JCB', bgImage: "url('resources/insta-payment-background.png')" },
+    maestro: { cardArrayIndex: 7, companyName: 'Maestro', bgImage: "url('resources/maestro-background.png')" },
+    masterCard: { cardArrayIndex: 8, companyName: 'MasterCard', bgImage: "url('resources/mastercard-background.png')" },
+    visa: { cardArrayIndex: 9, companyName: 'Visa', bgImage: "url('resources/visa-background.png')" },
+    visaEl: { cardArrayIndex: 10, companyName: 'Visa Electron', bgImage: "url('resources/visa-background.png')" },
+};
 
 function generateNewCard() {
     // clearing out the previous message:
@@ -390,73 +304,54 @@ function generateNewCard() {
 
     // generating a card number:
     const arraysOfCards = [
-        generateAmexCard(),
-        generateDcCbCard(),
-        generateDcNaCard(),
-        generateDcIntCard(),
-        generateDiscoverCard(),
-        generateInstaPayCard(),
-        generateJcbCard(),
-        generateMaestroCard(),
-        generateMasterCard(),
-        generateVisaCard(),
-        generateVisaElCard(),
+        generateAmexCard(), generateDcCbCard(), generateDcNaCard(), generateDcIntCard(), 
+        generateDiscoverCard(), generateInstaPayCard(), generateJcbCard(),
+        generateMaestroCard(), generateMasterCard(), generateVisaCard(), generateVisaElCard(),
     ]
 
     let chosenIssuer = captureSelectedIssuer();
-    let randomCard; 
-    let cardCo;
+    let issuerInfo = issuerData[chosenIssuer];
+    let randomCard = arraysOfCards[issuerInfo.cardArrayIndex]
+    let cardCo = issuerInfo.companyName;
 
-    if (chosenIssuer === 'amex') {
-        randomCard = arraysOfCards[0];
-        cardCo = 'American Express';
-    } else if (chosenIssuer === 'dcCb') {
-        randomCard = arraysOfCards[1];
-        cardCo = 'Diners Club – Carte Blanche';
-    } else if (chosenIssuer === 'dcNa') {
-        randomCard = arraysOfCards[2];
-        cardCo = 'Diners Club – North America';
-    } else if (chosenIssuer === 'dcInt') {
-        randomCard = arraysOfCards[3];
-        cardCo = 'Diners Club – International';
-    } else if (chosenIssuer === 'discover') {
-        randomCard = arraysOfCards[4];
-        cardCo = 'Discover';
-    } else if (chosenIssuer === 'instaPayment') {
-        randomCard = arraysOfCards[5];
-        cardCo = 'InstaPayment';
-    } else if (chosenIssuer === 'jcb') {
-        randomCard = arraysOfCards[6];
-        cardCo = 'JCB';
-    } else if (chosenIssuer === 'maestro') {
-        randomCard = arraysOfCards[7];
-        cardCo = 'Maestro';
-    } else if (chosenIssuer === 'masterCard') {
-        randomCard = arraysOfCards[8];
-        cardCo = 'MasterCard';
-    } else if (chosenIssuer === 'visa') {
-        randomCard = arraysOfCards[9];
-        cardCo = 'Visa';
-    } else if (chosenIssuer === 'visaEl') {
-        randomCard = arraysOfCards[10];
-        cardCo = 'Visa Electron';
-    } 
     // generating the expiry dates:
-    let expiryDate;
+
     function setExpiryDate() {
         const currentDate = new Date();
         const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Ensures two-digit month
         const year = String(currentDate.getFullYear() + 3).slice(-2); // Gets the last two digits of the year
-        return expiryDate = `${month}/${year}`;
+        return `${month}/${year}`;
     };
-    setExpiryDate();
-    // creating the message:
+    let expiryDate = setExpiryDate();
+
+    // Creating and styling the card (message):
     let newCardMessage = document.createElement('p');
     let cardNumber = randomCard.join('');
-    let phrase = `<span class="companyFont">${cardCo}</span><br><img class="chipImg" src="resources/chip.png"><img class="contactlessImg" src="resources/contactless.png"><br><span class="numberFont">${cardNumber}</span><br><span class="cardHolder">John Doe    |    ${expiryDate}</span>`;
+    let formattedCardNumber = cardNumber.replace(/(\d{4})(?=\d)/g, '$1 '); // grouping numbers by 4
+    let phrase = `<span class="companyFont">${cardCo}</span><br>
+                  <img class="chipImg" src="resources/chip.png"><img class="contactlessImg" src="resources/contactless.png"><br>
+                  <span class="numberFont">${formattedCardNumber}</span><br>
+                  <span class="cardHolder">John Doe    |    ${expiryDate}</span>`;
     newCardMessage.innerHTML = phrase;
     newCardMessage.id = 'cardMessage';
 
+    // setting the card-specific background:
+    newCardMessage.style.backgroundImage = issuerInfo.bgImage;
+    newCardMessage.style.backgroundSize = 'cover';     
+    newCardMessage.style.backgroundRepeat = 'no-repeat';   
+    newCardMessage.style.backgroundPosition = 'center';      
+    
+    if (chosenIssuer === 'dcCb' || chosenIssuer === 'dcNa' || chosenIssuer === 'dcInt') {
+        newCardMessage.style.color = '#0a2a73';
+    }
+
+    if (chosenIssuer === 'dcNa') {
+        newCardMessage.style.filter = 'hue-rotate(-100deg) brightness(0.9)'; 
+    } else if (chosenIssuer === 'dcInt') { 
+        newCardMessage.style.filter = 'hue-rotate(160deg) brightness(0.9)'; 
+    }
+
+    
     // appending the new card message below the generate button:
     document.getElementById('generate-new-card-section').appendChild(newCardMessage); 
 
@@ -481,12 +376,12 @@ function generateNewCard() {
         removeElementById('validateButton'); 
 
         if (validateCred(randomCard) === true) {
-            validatingMessage.innerHTML = 'This card number is <span id="validMessage">valid</span>.';
+            validatingMessage.innerHTML = `This card number <i>${cardNumber}</i> by <i>${cardCo}</i> is <span id="validMessage">valid</span>.`;
             document.getElementById('turn-valid-heading').innerHTML = ''; 
             removeElementById('turnValidButton'); 
             document.getElementById('validate-again-heading').innerHTML = '';
         } else if (validateCred(randomCard) === false) {
-            validatingMessage.innerHTML = 'This card number is <span id="invalidMessage">invalid</span>.';
+            validatingMessage.innerHTML = `This card number <i>${cardNumber}</i> by <i>${cardCo}</i> is <span id="invalidMessage">invalid</span>.`;
 
             // step 3 section gets added in case it's a faulty card:
             document.getElementById('turn-valid-heading').innerHTML = 'Step 3. Turn an invalid card valid.';
@@ -507,10 +402,31 @@ function generateNewCard() {
                 let correctedCard = turnInvalidCardValid(randomCard);
                 let fixedCard = document.createElement('p');
                 let cardNumber = correctedCard.join('');
-                let newMessage = `         <span class="companyFont">${cardCo}</span><br><img class="chipImg" src="resources/chip.png"><img class="contactlessImg" src="resources/contactless.png"><br><span class="numberFont">${cardNumber}</span><br><span class="cardHolder">John Doe    |    ${expiryDate}</span>`;
+                let formattedCardNumber = cardNumber.replace(/(\d{4})(?=\d)/g, '$1 '); // grouping numbers by 4
+                let newMessage = `<span class="companyFont">${cardCo}</span><br>
+                                  <img class="chipImg" src="resources/chip.png"><img class="contactlessImg" src="resources/contactless.png"><br>
+                                  <span class="numberFont">${formattedCardNumber}</span><br>
+                                  <span class="cardHolder">John Doe    |    ${expiryDate}</span>`;
                 fixedCard.innerHTML = newMessage;
                 fixedCard.id = 'turnValidMessage';
-                fixedCard.style.marginTop = '2rem';
+
+                // setting the card-specific background:
+                fixedCard.style.backgroundImage = issuerInfo.bgImage;
+                fixedCard.style.backgroundSize = 'cover';     
+                fixedCard.style.backgroundRepeat = 'no-repeat';   
+                fixedCard.style.backgroundPosition = 'center';   
+
+                if (chosenIssuer === 'dcCb' || chosenIssuer === 'dcNa' || chosenIssuer === 'dcInt') {
+                    fixedCard.style.color = '#0a2a73';
+                    fixedCard.style.backgroundImage = "url('resources/dc-cb-background.png')";
+                }
+            
+                if (chosenIssuer === 'dcNa') {
+                    fixedCard.style.filter = 'hue-rotate(-100deg) brightness(0.9)'; 
+                } else if (chosenIssuer === 'dcInt') { 
+                    fixedCard.style.filter = 'hue-rotate(160deg) brightness(0.9)'; 
+                }
+
                 document.getElementById('turn-valid-section').appendChild(fixedCard);
 
                 removeElementById('turnValidButton'); 
@@ -528,7 +444,7 @@ function generateNewCard() {
                     removeElementById('validateAgainButton');
 
                     if (validateCred(correctedCard) === true) {
-                        validateAgainMessage.innerHTML = `Confirmed: the new card number is <span>valid</span>.`;
+                        validateAgainMessage.innerHTML = `Confirmed: this card number <i>${cardNumber}</i> by <i>${cardCo}</i> is <span id="validMessage">valid</span>.`;
                        // validateAgainMessage.style.color = 'green';
                     } else {
                         validateAgainMessage.innerHTML = 'This did not work as expected. The new card is also invalid.';
@@ -548,6 +464,106 @@ function generateNewCard() {
 
 generateCardButton.addEventListener('click', generateNewCard);
 
+
+// function to identify the card issuer company of a card:
+/*
+function getCardCompany(cardArray) {
+    const cleanedNumber = cardArray.join('');  // converting array of digits into a string
+
+    // defining the card issuers with their respective IIN ranges and lengths
+    const cardIssuers = [
+        { name: "American Express", prefixes: ["34", "37"], lengths: [15] },
+        { name: "Diners Club - Carte Blanche", prefixes: ["300", "301", "302", "303", "304", "305"], lengths: [14] },
+        { name: "Diners Club - International", prefixes: ["36"], lengths: [14] },
+        { name: "Diners Club - USA & Canada", prefixes: ["54"], lengths: [16] },
+        { name: "Discover", prefixes: ["6011", "622126", "622925", "644", "645", "646", "647", "648", "649", "65"], lengths: [16, 17, 18, 19] },
+        { name: "InstaPayment", prefixes: ["637", "638", "639"], lengths: [16] },
+        { name: "JCB", prefixes: ["3528", "3529", "353", "354", "355", "356", "357", "358"], lengths: [16, 17, 18, 19] },
+        { name: "Maestro", prefixes: ["5018", "5020", "5038", "5893", "6304", "6759", "6761", "6762", "6763"], lengths: [16, 17, 18, 19] },
+        { name: "MasterCard", prefixes: ["51", "52", "53", "54", "55", "222100", "222101", "222102", "222103", "222104", "222105", "222106", "222107", "222108", "222109", "222110", "272099"], lengths: [16] },
+        { name: "Visa", prefixes: ["4"], lengths: [13, 16, 19] },
+        { name: "Visa Electron", prefixes: ["4026", "417500", "4508", "4844", "4913", "4917"], lengths: [16] }
+    ];
+
+    // checking each card issuer
+    for (const issuer of cardIssuers) {
+        const matchesPrefix = issuer.prefixes.some(prefix => cleanedNumber.startsWith(prefix));
+        const matchesLength = issuer.lengths.includes(cleanedNumber.length);
+
+        if (matchesPrefix && matchesLength) {
+            return `${issuer.name}`;
+        }
+    }
+
+    return "Unknown credit card issuer";
+}
+*/
+
+/*
+const getCardCompany = card => {
+    if ((card[0] === 3 && card[1] === 4) || (card[0] === 3 && card[1] === 7)) { // Amex begins with 34 or 37
+        return'American Express';
+    } else if (card[0] === 3 && card[1] === 5 ){  // JCB range is actually 3528–3589
+        return 'JCB';
+    } else if ((card[0] === 5 && card[1] === 0 && card[2] === 1 && card[3] === 8) || // Maestro begins with 5018, 5020, 5038, 5893, 6304, 6759, 6761, 6762, 6763
+    (card[0] === 5 && card[1] === 0 && card[2] === 2 && card[3] === 0) || 
+    (card[0] === 5 && card[1] === 0 && card[2] === 3 && card[3] === 8) || 
+    (card[0] === 5 && card[1] === 8 && card[2] === 9 && card[3] === 3) || 
+    (card[0] === 6 && card[1] === 3 && card[2] === 0 && card[3] === 4) || 
+    (card[0] === 6 && card[1] === 7 && card[2] === 5 && card[3] === 9) || 
+    (card[0] === 6 && card[1] === 7 && card[2] === 6 && card[3] === 1) || 
+    (card[0] === 6 && card[1] === 7 && card[2] === 6 && card[3] === 2) || 
+    (card[0] === 6 && card[1] === 7 && card[2] === 6 && card[3] === 3)){
+    return 'Maestro';
+    } else if ((card[0] === 3 && card[1] === 0 && card[2] === 0) || // Diners Club – Carte Blanche begins with 300, 301, 302, 303, 304, 305
+               (card[0] === 3 && card[1] === 0 && card[2] === 1) || 
+               (card[0] === 3 && card[1] === 0 && card[2] === 2) || 
+               (card[0] === 3 && card[1] === 0 && card[2] === 3) || 
+               (card[0] === 3 && card[1] === 0 && card[2] === 4) || 
+               (card[0] === 3 && card[1] === 0 && card[2] === 5)) { 
+        return 'Diners Club – Carte Blanche';
+    } else if (card[0] === 3 && card[1] === 6) { // Diners Club – International begins with 36
+        return 'Diners Club – International';
+    } else if (card[0] === 5 && card[1] === 4) { // Diners Club – USA & Canada begins with 54 (length 16)
+        return 'Diners Club – USA & Canada';
+    } else if ((card[0] === 4 && card[1] === 0 && card[2] === 3 && card[3] === 6) || // Visa Electron begins with 4026, 417500, 4508, 4844, 4913, 4917
+               (card[0] === 4 && card[1] === 1 && card[2] === 7 && card[4] === 5 && card[5] === 0 && card[6] === 0) || 
+               (card[0] === 4 && card[1] === 5 && card[2] === 0 && card[3] === 8) || 
+               (card[0] === 4 && card[1] === 8 && card[2] === 4 && card[3] === 4) || 
+               (card[0] === 4 && card[1] === 9 && card[2] === 1 && card[3] === 3) || 
+               (card[0] === 4 && card[1] === 9 && card[2] === 1 && card[3] === 7)){ 
+        return 'Visa Electron';
+    } else if (card[0] === 4) { // Visa begins with 4
+        return 'Visa';
+    } else if ((card[0] === 5 && card[1] === 1) || // Mastercard begins with 51, 52, 53, 54, 55, 222100-272099
+               (card[0] === 5 && card[1] === 2) ||
+               (card[0] === 5 && card[1] === 3) ||
+               (card[0] === 5 && card[1] === 4) ||
+               (card[0] === 5 && card[1] === 5) ||
+               (card[0] === 2 && card[1] === 2) || // actually it's a range from 222100-272099
+               (card[0] === 2 && card[1] === 3) ||
+               (card[0] === 2 && card[1] === 4) ||
+               (card[0] === 2 && card[1] === 5) ||
+               (card[0] === 2 && card[1] === 6) ||
+               (card[0] === 2 && card[1] === 7)){
+        return 'Mastercard';
+    }  else if ((card[0] === 6 && card[1] === 0 && card[2] === 1 && card[3] === 1) || // Discover begins with 6011, 622126-622925, 644, 645, 647, 648, 649, 65
+               (card[0] === 6 && card[1] === 4 && card[2] === 4) || // actually it's a range: 622126-622925
+               (card[0] === 6 && card[1] === 4 && card[2] === 5) ||
+               (card[0] === 6 && card[1] === 4 && card[2] === 7) ||
+               (card[0] === 6 && card[1] === 4 && card[2] === 8) ||
+               (card[0] === 6 && card[1] === 4 && card[2] === 9) ||
+               (card[0] === 6 && card[1] === 5)){
+        return 'Discover';
+    }  else if ((card[0] === 6 && card[1] === 3 && card[2] === 7) || // InstaPayment begins with 637, 638, 639
+                (card[0] === 6 && card[1] === 3 && card[2] === 8) || 
+                (card[0] === 6 && card[1] === 3 && card[2] === 9)){
+        return 'InstaPayment';
+    } else {
+            return 'Unknown company';
+    }
+}
+*/
 
 /* order of creating a website flow: 
 

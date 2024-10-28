@@ -84,14 +84,14 @@ header {
 }
 
 header h2 { /* The "logo" element */
-    padding-left: 1.5rem;
+    padding-left: 2.5rem;
     margin-bottom: 0;
 }
 
 header nav ul {
     display: flex;
     list-style: none;
-    padding-right: 1.5rem;
+    padding-right: 2.5rem;
     font-size: 1rem;
     font-weight: 500;
     align-items: center;
@@ -345,6 +345,21 @@ button:hover {
 #aboutGrid {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    justify-items: center;
+}
+
+@media only screen and (max-width: 560px) {
+    #aboutSection {
+        padding: 2rem 0.5rem;
+        width: 90%;
+    }
+    
+    #aboutGrid {
+        grid-template-columns: 1fr;
+    }
+    .paragraph {
+        max-width: 95%;
+    }
 }
 
 .paragraph {

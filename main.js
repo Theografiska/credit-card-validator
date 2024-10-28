@@ -478,13 +478,13 @@ function generateNewCard() {
         validatingMessage.id = 'validatingMessage';
         validatingMessage.style.marginTop = '2rem';
 
-        removeElementById('validateButton'); // TESTING
+        removeElementById('validateButton'); 
 
         if (validateCred(randomCard) === true) {
             validatingMessage.innerHTML = 'This card number is <span id="validMessage">valid</span>.';
-            document.getElementById('turn-valid-heading').innerHTML = ''; // TESTING
-            removeElementById('turnValidButton'); // TESTING
-            document.getElementById('validate-again-heading').innerHTML = ''; // TESTING
+            document.getElementById('turn-valid-heading').innerHTML = ''; 
+            removeElementById('turnValidButton'); 
+            document.getElementById('validate-again-heading').innerHTML = '';
         } else if (validateCred(randomCard) === false) {
             validatingMessage.innerHTML = 'This card number is <span id="invalidMessage">invalid</span>.';
 
@@ -513,7 +513,7 @@ function generateNewCard() {
                 fixedCard.style.marginTop = '2rem';
                 document.getElementById('turn-valid-section').appendChild(fixedCard);
 
-                removeElementById('turnValidButton'); // TESTING
+                removeElementById('turnValidButton'); 
 
                 document.getElementById('validate-again-heading').innerHTML = 'Step 4. Validate the card again.';
                 document.getElementById('validate-again-section').appendChild(validateAgainButton);

@@ -37,6 +37,7 @@ h2 {
     margin-bottom: 3rem;
     position: relative;
     text-align: center;
+    color: #0a2a73;
 }
 
 h3 {
@@ -45,6 +46,7 @@ h3 {
     font-weight: 500;
     margin-bottom: 1.5rem;
     text-align: center;
+    color: #03247e;
 }
 
 h4 {
@@ -67,6 +69,15 @@ a {
     color: white;
 }
 
+a.nav-item {
+    color: #fff;
+    transition: color 0.3s, background 0.3s;
+}
+
+a.nav-item:hover {
+    color: #3498db;
+}
+
 /* header settings */
 
 header {
@@ -77,7 +88,6 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /*align-content: center;*/
     text-transform: uppercase;
     box-shadow: 0 1px 1px #3f3c36;
     z-index: 100;
@@ -196,10 +206,6 @@ button:hover {
 }
 
 /* main button to generate a card */
-/*
-#cardButton {  
-    max-width: 30%;
-}*/
 
 @media only screen and (max-width: 560px) {
     button {
@@ -348,7 +354,7 @@ button:hover {
     justify-items: center;
 }
 
-@media only screen and (max-width: 560px) {
+@media only screen and (max-width: 760px) {
     #aboutSection {
         padding: 2rem 0.5rem;
         width: 90%;
@@ -377,7 +383,7 @@ button:hover {
 }
 
 .paragraph a {
-    color: #03247e;
+    color: #3498db;
     font-weight: bold;
 }
 

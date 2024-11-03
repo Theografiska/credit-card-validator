@@ -111,7 +111,7 @@ nav ul li {
     padding-left: 2.5rem;
 }
 
-/* banner or hero section */
+/* Option A section */
 
 main {
     position: relative; 
@@ -338,6 +338,16 @@ button:hover {
     font-weight: bold;
 }
 
+/* Option B section */
+
+#inputBarSection {
+    margin-bottom: 4rem;
+    padding: 4rem 2rem;
+    border-radius: 1rem;
+    width: 75%;
+    min-height: 30rem;
+    background: linear-gradient(135deg, #d0d8e8, #c4cde0); /* Slightly darker gradient for depth */
+}
 
 /* about section */
 

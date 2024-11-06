@@ -1,5 +1,5 @@
 let assert = require('assert');
-let { validateCred } = require('./main.js');  // Using CommonJS to require the function
+const { validateCred } = require('./helper-functions.js');  // Using require() for CommonJS
 
 describe('checking the validity of the credit card', () => {
     it('should return true for a valid credit card number', () => {

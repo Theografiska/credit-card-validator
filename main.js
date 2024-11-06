@@ -465,6 +465,9 @@ function generateNewCard() {
 generateCardButton.addEventListener('click', generateNewCard);
 
 
+// Export the function using CommonJS
+module.exports = {validateCred};
+
 // function to identify the card issuer company of a card:
 /*
 function getCardCompany(cardArray) {

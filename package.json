@@ -1,0 +1,14 @@
+{
+  "name": "credit-card-checker-starter",
+  "version": "1.0.0",
+  "description": "## Summary of the Project",
+  "main": "main.js",
+  "scripts": {
+    "test": "mocha main_test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^10.8.2"
+  }
+}
